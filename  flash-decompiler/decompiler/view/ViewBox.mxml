@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%" height="100%" creationComplete="initializeApp()" >
+			<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.control.CairngormEvent;
+			import com.ludicast.decompiler.controller.DecompilerController;
+			import com.ludicast.decompiler.model.DecompilerModelLocator;
+			
+			[Bindable]
+			protected var model:DecompilerModelLocator;
+			
+			protected var controller:DecompilerController;
+			
+			protected function initializeApp():void {
+				model = DecompilerModelLocator.getInstance();
+				controller = DecompilerController.getInstance();	
+			}
+
+			protected function loadRemoteSWF():void {
+				var evt:CairngormEvent = new CairngormEvent(DecompilerController.LOAD_REMOTE_SWF);
+				evt.data = urlInfo.text;
+				evt.dispatch();
+			}
+			//http://prideofhellskitchen.com/prideLoad.swf
+			//http://ludicast.com/demos/presentation/show.swf
+			//http://www.addictingclips.com/player-ac-em.swf
+			//http://www.ageia.com/flash/heavyrain.swf
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%">
+		<mx:Label text="URL of SWF" /><mx:TextInput text="http://ludicast.com/demos/decompiler/Decompiler.swf" id="urlInfo" width="100%" /><mx:Button click="loadRemoteSWF()" label="Load Remote SWF" />
+	</mx:HBox>
+	<mx:TabNavigator width="100%" height="100%" >
+		<mx:VBox width="100%" height="100%" label="Hex/Ascii">
+			<mx:TextArea fontFamily="Courier" editable="false" width="100%" height="100%" fontSize="14" text="{model.dataString}" />			
+		</mx:VBox>
+		<mx:VBox width="100%" height="100%" label="Header Section">
+			<mx:Form>
+				<mx:FormItem label="Compressed:">
+					<mx:Label text="{model.swfProps.compressed ? 'Yes' : 'No'}" />
+				</mx:FormItem>
+				<mx:FormItem label="Version:">
+					<mx:Label text="{model.swfProps.version}" />
+				</mx:FormItem>				
+				<mx:FormItem label="Length:">
+					<mx:Label text="{model.swfProps.fileLength}" />
+				</mx:FormItem>		
+
+				<mx:FormItem label="Width">
+					<mx:Label text="{model.swfProps.width}" />
+				</mx:FormItem>		
+				<mx:FormItem label="Height:">
+					<mx:Label text="{model.swfProps.height}" />
+				</mx:FormItem>				
+				<mx:FormItem label="Frame Rate:">
+					<mx:Label text="{model.swfProps.frameRate}" />
+				</mx:FormItem>
+				<mx:FormItem label="Frame Count:">
+					<mx:Label text="{model.swfProps.frameCount}" />
+				</mx:FormItem>			
+			</mx:Form>		
+		</mx:VBox>
+	<mx:VBox width="100%" height="100%" label="Assets"><mx:Label text="Coming Soon" /></mx:VBox>
+	<mx:VBox width="100%" height="100%" label="Scripts"><mx:Label text="Coming Soon" /></mx:VBox>
+	<mx:VBox width="100%" height="100%" label="AS3"><mx:Label text="Coming Soon" /></mx:VBox>
+	</mx:TabNavigator>
+
+</mx:VBox>
