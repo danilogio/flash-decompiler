@@ -20,10 +20,9 @@ package com.ludicast.decompiler.command
 		{
 			model = DecompilerModelLocator.getInstance();
 			model.currentState = DecompilerModelLocator.LOADING_STATE;
-			var path:String = event.data as String;
-					
-			var file:File = new File(path);
-			if (!file.exists) {
+			var file:File = event.data as File;
+			
+			if (file == null || !file.exists) {
 				trace ("doesn't exit");
 				model.currentState = DecompilerModelLocator.ERROR_STATE;
 				return;

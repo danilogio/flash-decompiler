@@ -38,7 +38,7 @@ package com.ludicast.decompiler.util
 			tagObj.id = id;
 			tagObj.tag = tag;
 			tagObj.size = size;
-			tagObj.dump = dump;
+			tagObj.byteData = dump;
 
 			return tagObj;
 		}

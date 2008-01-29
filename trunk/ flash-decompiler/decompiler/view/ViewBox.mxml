@@ -25,11 +25,22 @@
 				evt.dispatch();
 			}
 
-			protected function loadLocalSWF():void {
-				var evt:CairngormEvent = new CairngormEvent(DecompilerController.LOAD_LOCAL_SWF);
-				evt.data = fileInfo.text;
-				evt.dispatch();
+			protected function browseLocalSWF():void {
+
+				var file:File = new File();
+				file.addEventListener(Event.SELECT, fileSelect);
+				var swfFilter:FileFilter = new FileFilter("*.swf","*.swf");
+				file.browse([swfFilter]);
 			}			
+			
+			public function fileSelect(event:Event):void {
+				var file:File = event.target as File;
+
+				var evt:CairngormEvent = new CairngormEvent(DecompilerController.LOAD_LOCAL_SWF);
+				trace ("found file" + file);
+				evt.data = file;
+				evt.dispatch();	
+			}
 			
 			public function selectBox(state:String):Container {
 				if (state == DecompilerModelLocator.PARSED_STATE) {
@@ -79,21 +90,21 @@
 			protected function showTagData(tagID:Number):void {
 				var tag:Tag = model.tags.getItemAt(tagID) as Tag;
 				trace ("tag" + tag);
-				var tagDump:String = ByteCodePrinter.prettyPrint(tag.dump);
+				var tagDump:String = tag.tagData;
 				tagData.text = tagDump;
 				
 			}		
 		]]>
 	</mx:Script>
 
-	<mx:HBox width="100%">
+	<mx:HBox width="100%" verticalAlign="middle">
 		<mx:CheckBox label="Use Local File" id="localCheckbox" change="switchLocalRemote()" />
 		<mx:ViewStack width="100%" id="localRemoteBox">
-			<mx:HBox id="remoteBox">
+			<mx:HBox id="remoteBox" verticalAlign="middle">
 				<mx:Label text="URL of SWF" /><mx:TextInput id="urlInfo" width="100%" /><mx:Button click="loadRemoteSWF()" label="Load Remote SWF" />	
 			</mx:HBox>		
-			<mx:HBox id="localBox">
-				<mx:Label text="File Name" /><mx:TextInput id="fileInfo" width="100%" /><mx:Button click="loadLocalSWF()" label="Load Local SWF" />
+			<mx:HBox id="localBox" verticalAlign="middle">
+				<mx:Label text="File Name" /><mx:Button click="browseLocalSWF()" label="Load Local SWF..." />
 			</mx:HBox>
 		</mx:ViewStack>	
 	</mx:HBox>
