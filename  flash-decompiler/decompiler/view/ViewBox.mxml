@@ -2,6 +2,7 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%" height="100%" creationComplete="initializeApp()" >
 			<mx:Script>
 		<![CDATA[
+			import mx.core.Container;
 			import com.adobe.cairngorm.control.CairngormEvent;
 			import com.ludicast.decompiler.controller.DecompilerController;
 			import com.ludicast.decompiler.model.DecompilerModelLocator;
@@ -22,15 +23,53 @@
 				evt.dispatch();
 			}
 			
+			public function selectBox(state:String):Container {
+				if (state == DecompilerModelLocator.PARSED_STATE) {
+					trace ("showing info box");
+					//dataText.text = model.dataString; //barfing on binding for some reason
+					//trace (model.dataString);
+					callLater(assignText);
+					return showInfoBox;
+				} else {
+					trace ("showing information");
+					stateText.text = getStateLabel(state);
+					return informationBox;
+				}
+			}
+
+			protected function assignText():void {
+				dataText.text = model.dataString; //barfing on binding for some reason
+			}
+
+			public function getStateLabel(state:String):String {
+				switch (state) {
+					case DecompilerModelLocator.ERROR_STATE:
+						return "Error loading or parsing SWF";
+					case DecompilerModelLocator.PARSING_STATE:
+						trace ("returned parsing state!");
+						return "Parsing SWF";
+					case DecompilerModelLocator.LOADING_STATE:
+						return "Loading SWF";
+					case DecompilerModelLocator.WAITING_STATE:
+						return "Enter name of SWF to analyze";
+					case DecompilerModelLocator.PARSED_STATE:
+						return "Should not appear...";
+					default:
+						return "Unspecified State";
+				}
+			}			
 		]]>
 	</mx:Script>
 	<mx:HBox width="100%">
 		<mx:Label text="URL of SWF" /><mx:TextInput text="http://ludicast.com/demos/decompiler/Decompiler.swf" id="urlInfo" width="100%" /><mx:Button click="loadRemoteSWF()" label="Load Remote SWF" />
 	</mx:HBox>
-	<mx:TabNavigator width="100%" height="100%" >
-		<mx:VBox width="100%" height="100%" label="Hex/Ascii">
-			<mx:TextArea fontFamily="Courier" editable="false" width="100%" height="100%" fontSize="14" text="{model.dataString}" />			
-		</mx:VBox>
+	<mx:ViewStack creationPolicy="all" selectedChild="{selectBox(model.currentState)}" width="100%" height="100%">
+	<mx:HBox id="informationBox" width="100%" height="100%" verticalAlign="middle">
+		<mx:Label textAlign="center" width="100%" id="stateText" />
+	</mx:HBox>
+
+	<mx:TabNavigator id="showInfoBox" width="100%" height="100%" >
+
 		<mx:VBox width="100%" height="100%" label="Header Section">
 			<mx:Form>
 				<mx:FormItem label="Compressed:">
@@ -38,14 +77,13 @@
 				</mx:FormItem>
 				<mx:FormItem label="Version:">
 					<mx:Label text="{model.swfProps.version}" />
-				</mx:FormItem>				
+				</mx:FormItem>
 				<mx:FormItem label="Length:">
 					<mx:Label text="{model.swfProps.fileLength}" />
-				</mx:FormItem>		
-
+				</mx:FormItem>
 				<mx:FormItem label="Width">
 					<mx:Label text="{model.swfProps.width}" />
-				</mx:FormItem>		
+				</mx:FormItem>
 				<mx:FormItem label="Height:">
 					<mx:Label text="{model.swfProps.height}" />
 				</mx:FormItem>				
@@ -59,4 +97,9 @@
 		</mx:VBox>
 	</mx:TabNavigator>
 
+	<mx:VBox width="100%" height="100%" label="Hex/Ascii">
+		<mx:TextArea id="dataText" fontFamily="Courier" editable="false" width="100%" height="100%" fontSize="14" />
+	</mx:VBox>
+		
+	</mx:ViewStack>
 </mx:VBox>

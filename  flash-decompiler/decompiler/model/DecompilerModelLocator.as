@@ -4,15 +4,21 @@ package com.ludicast.decompiler.model
 	import com.ludicast.decompiler.vo.SWFPropsVO;
 	
 	[Bindable]
-	public class DecompilerModelLocator implements ModelLocator
-	{
+	public class DecompilerModelLocator implements ModelLocator {
 		
 	
-	private static var modelLocator : DecompilerModelLocator;
-      
+		private static var modelLocator : DecompilerModelLocator;      
       public var dataString:String = "";
       public var decompressedDataString:String = "";
       public var swfProps:SWFPropsVO;
+      
+      public static const LOADING_STATE:String = "loadingState";
+      public static const PARSING_STATE:String = "parsingState";
+      public static const ERROR_STATE:String = "errorState";
+      public static const WAITING_STATE:String = "waitingState";
+      public static const PARSED_STATE:String = "parsedState";
+	  
+	  public var currentState:String = WAITING_STATE;
 
       public static function getInstance() : DecompilerModelLocator 
       {

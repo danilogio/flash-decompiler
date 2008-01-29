@@ -4,7 +4,6 @@ package com.ludicast.decompiler.command
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.ludicast.decompiler.error.SWFParseError;
 	import com.ludicast.decompiler.model.DecompilerModelLocator;
-	import com.ludicast.decompiler.util.ByteCodePrinter;
 	import com.ludicast.decompiler.util.HeaderParser;
 	import com.ludicast.decompiler.util.TagParser;
 	import com.ludicast.decompiler.vo.SWFPropsVO;
@@ -21,10 +20,13 @@ package com.ludicast.decompiler.command
 	public class LoadRemoteSWF implements ICommand
 	{
 		private var loader:URLLoader;
+		private var model:DecompilerModelLocator;
 		
 		public function execute(event:CairngormEvent):void
 		{
-			var url:String = event.data;			
+			model = DecompilerModelLocator.getInstance();
+			model.currentState = DecompilerModelLocator.LOADING_STATE;
+			var url:String = event.data;	
 			var urlReq:URLRequest = new URLRequest(url);
 			loader = new URLLoader();
 			loader.dataFormat = URLLoaderDataFormat.BINARY;
@@ -33,15 +35,28 @@ package com.ludicast.decompiler.command
 		}
 
 		public function loaded(event:Event):void {
+			trace ("loaded!");
+			model.currentState = DecompilerModelLocator.PARSING_STATE;		
+			try {
+				cleanAndParseSWF(event.currentTarget.data);
+				trace ("there is try good");
+			} catch (error:Error) {
+				trace ("error here");
+				model.currentState = DecompilerModelLocator.ERROR_STATE;
+				return;			
+			}
+			trace ("parsed successfully");
+			model.currentState = DecompilerModelLocator.PARSED_STATE;	
+		}
 
+		public function cleanAndParseSWF(data:*):void {
 			var byteArray:ByteArray = new ByteArray();
-			byteArray.writeObject(loader.data);
+			byteArray.writeObject(data);
 			byteArray = shiftBytesToStart(byteArray);
 			byteArray.endian = Endian.LITTLE_ENDIAN;
 			
-			parseSWF(byteArray);		
+			parseSWF(byteArray);					
 		}
-
 
 
 		
