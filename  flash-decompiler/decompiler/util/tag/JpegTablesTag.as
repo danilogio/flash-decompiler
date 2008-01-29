@@ -4,10 +4,10 @@ package com.ludicast.decompiler.util.tag
 	
 	import flash.utils.ByteArray;
 
-	public class JpegTablesTag extends Tag
+	public class JPEGTablesTag extends Tag
 	{
 		public override function toString ():String {
-			return "Jpeg Tables Tag: " + super.toString();
+			return "JPEG Tables Tag: " + super.toString();
 		}
 		
 	}
