@@ -1,7 +1,7 @@
 package com.ludicast.decompiler.controller
 {
 	import com.adobe.cairngorm.control.FrontController;
-	import com.ludicast.decompiler.command.LoadRemoteSWF;
+	import com.ludicast.decompiler.command.*;
 	
 	public class DecompilerController extends FrontController
 	{
@@ -23,9 +23,10 @@ package com.ludicast.decompiler.controller
 		
 		public function initialiseCommands() : void {
 			addCommand( LOAD_REMOTE_SWF,  LoadRemoteSWF );
+			addCommand( LOAD_LOCAL_SWF,  LoadLocalSWF );
 		}	
 	
 		public static const LOAD_REMOTE_SWF:String = "loadRemoteSWF";				
-		
+		public static const LOAD_LOCAL_SWF:String = "loadLocalSWF";		
 	}
 }

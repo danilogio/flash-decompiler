@@ -16,17 +16,6 @@ package com.ludicast.decompiler.util
 				tags.addItem(getTag(array));
 			}
 			
-			var data:String = "";
-			for (var i:int = 0; i < tags.length; i++) {
-				var tag:Tag = Tag(tags.getItemAt(i))
-				data += tag.toString() + "\n";
-				data += ByteCodePrinter.prettyPrint(tag.dump) + "\n\n"; 
-			}
-
-
-			
-			DecompilerModelLocator.getInstance().dataString = data;
-			
 			return tags;
 		}
 		
