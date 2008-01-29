@@ -38,9 +38,9 @@ package com.ludicast.decompiler.util
 				case 15:
 					return new StartSoundTag();
 				case 17:
-					return new SoundStreamHeadTag();
-				case 18:
 					return new DefineButtonSoundTag();
+				case 18:
+					return new SoundStreamHeadTag();
 				case 19:
 					return new SoundStreamBlockTag();					
 				case 20: 
