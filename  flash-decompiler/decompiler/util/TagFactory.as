@@ -19,22 +19,38 @@ package com.ludicast.decompiler.util
 					return new RemoveObjectTag();
 				case 6: 
 					return new DefineBitsTag();
+				case 7: 
+					return new DefineButtonTag();
 				case 8: 
 					return new JpegTablesTag();
 				case 9:
 					return new SetBackgroundColorTag();
 				case 10:
 					return new DefineFontTag();
+				case 11:
+					return new DefineTextTag();
 				case 12:
 					return new DoActionTag();				
 				case 13:
 					return new DefineFontInfoTag();
+				case 14:
+					return new DefineSoundTag();
+				case 15:
+					return new StartSoundTag();
+				case 17:
+					return new SoundStreamHeadTag();
+				case 18:
+					return new DefineButtonSoundTag();
+				case 19:
+					return new SoundStreamBlockTag();					
 				case 20: 
 					return new DefineBitsLosslessTag();
 				case 21: 
 					return new DefineBitsJPEG2Tag();
 				case 22: 
 					return new DefineShape2Tag();
+				case 23: 
+					return new DefineButtonCxformTag();
 				case 24:
 					return new ProtectTag();
 				case 26: 
@@ -43,14 +59,22 @@ package com.ludicast.decompiler.util
 					return new RemoveObject2Tag();					
 				case 32: 
 					return new DefineShape3Tag();
+				case 33: 
+					return new DefineText2Tag();
+				case 34: 
+					return new DefineButton2Tag();					
 				case 35: 
 					return new DefineBitsJPEG3Tag();
 				case 36: 
 					return new DefineBitsLossless2Tag();
+				case 37: 
+					return new DefineEditTextTag();
 				case 39:
 					return new DefineSpriteTag();
 				case 43:
 					return new FrameLabelTag();
+				case 45:
+					return new SoundStreamHead2Tag();					
 				case 46:
 					return new DefineMorphShapeTag();
 				case 48:
@@ -63,6 +87,10 @@ package com.ludicast.decompiler.util
 					return new EnableDebuggerTag();
 				case 59:
 					return new DoInitActionTag();
+				case 60:
+					return new DefineVideoStreamTag();
+				case 61:
+					return new VideoFrameTag();
 				case 62:
 					return new DefineFontInfo2Tag();					
 				case 64:
@@ -79,6 +107,8 @@ package com.ludicast.decompiler.util
 					return new ImportAssets2Tag();
 				case 73:
 					return new DefineFontAlignZonesTag();
+				case 74:
+					return new CSMTextSettingsTag();	
 				case 75:
 					return new DefineFont3Tag();					
 				case 76:
@@ -95,8 +125,12 @@ package com.ludicast.decompiler.util
 					return new DefineMorphShape2Tag();								
 				case 86:
 					return new DefineSceneAndFrameLabelTag();
+				case 87:
+					return new DefineBinaryDataTag();
 				case 88:
 					return new DefineFontNameTag();
+				case 89:
+					return new StartSound2Tag();
 				default:
 					return new Tag();
 			}

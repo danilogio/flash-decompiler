@@ -1,11 +1,14 @@
 package com.ludicast.decompiler.util.tag
 {
 	import com.ludicast.decompiler.vo.Tag;
+	
+	import flash.utils.ByteArray;
 
-	public class DefineTextTag extends Tag
+	public class SoundStreamBlockTag extends Tag
 	{
 		public override function toString ():String {
-			return "Define Text Tag: " + super.toString();
+			return "Sound Stream Block Tag: " + super.toString();
 		}
+		
 	}
 }
