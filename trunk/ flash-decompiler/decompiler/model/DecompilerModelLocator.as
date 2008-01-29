@@ -3,14 +3,16 @@ package com.ludicast.decompiler.model
 	import com.adobe.cairngorm.model.ModelLocator;
 	import com.ludicast.decompiler.vo.SWFPropsVO;
 	
+	import mx.collections.ArrayCollection;
+	
 	[Bindable]
 	public class DecompilerModelLocator implements ModelLocator {
 		
 	
 		private static var modelLocator : DecompilerModelLocator;      
-      public var dataString:String = "";
-      public var decompressedDataString:String = "";
       public var swfProps:SWFPropsVO;
+      public var tags:ArrayCollection;
+      
       
       public static const LOADING_STATE:String = "loadingState";
       public static const PARSING_STATE:String = "parsingState";

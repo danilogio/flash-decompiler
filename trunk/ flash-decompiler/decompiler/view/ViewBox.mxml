@@ -2,6 +2,9 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%" height="100%" creationComplete="initializeApp()" >
 			<mx:Script>
 		<![CDATA[
+			import com.ludicast.decompiler.util.ByteCodePrinter;
+			import com.ludicast.decompiler.vo.Tag;
+			import mx.core.UITextField;
 			import mx.core.Container;
 			import com.adobe.cairngorm.control.CairngormEvent;
 			import com.ludicast.decompiler.controller.DecompilerController;
@@ -9,7 +12,6 @@
 			
 			[Bindable]
 			protected var model:DecompilerModelLocator;
-			
 			protected var controller:DecompilerController;
 			
 			protected function initializeApp():void {
@@ -22,23 +24,24 @@
 				evt.data = urlInfo.text;
 				evt.dispatch();
 			}
+
+			protected function loadLocalSWF():void {
+				var evt:CairngormEvent = new CairngormEvent(DecompilerController.LOAD_LOCAL_SWF);
+				evt.data = fileInfo.text;
+				evt.dispatch();
+			}			
 			
 			public function selectBox(state:String):Container {
 				if (state == DecompilerModelLocator.PARSED_STATE) {
 					trace ("showing info box");
 					//dataText.text = model.dataString; //barfing on binding for some reason
 					//trace (model.dataString);
-					callLater(assignText);
 					return showInfoBox;
 				} else {
 					trace ("showing information");
 					stateText.text = getStateLabel(state);
 					return informationBox;
 				}
-			}
-
-			protected function assignText():void {
-				dataText.text = model.dataString; //barfing on binding for some reason
 			}
 
 			public function getStateLabel(state:String):String {
@@ -57,11 +60,42 @@
 					default:
 						return "Unspecified State";
 				}
-			}			
+			}
+			
+			protected function switchLocalRemote():void {
+				if (localCheckbox.selected) {
+					localRemoteBox.selectedChild = localBox;
+				} else {
+					localRemoteBox.selectedChild = remoteBox;
+				}
+			}	
+			
+			protected function tagInfo(event:Event):void {
+				if (event.target is UITextField) {
+					showTagData (tagList.selectedIndex);
+				}
+			}	
+					
+			protected function showTagData(tagID:Number):void {
+				var tag:Tag = model.tags.getItemAt(tagID) as Tag;
+				trace ("tag" + tag);
+				var tagDump:String = ByteCodePrinter.prettyPrint(tag.dump);
+				tagData.text = tagDump;
+				
+			}		
 		]]>
 	</mx:Script>
+
 	<mx:HBox width="100%">
-		<mx:Label text="URL of SWF" /><mx:TextInput text="http://ludicast.com/demos/decompiler/Decompiler.swf" id="urlInfo" width="100%" /><mx:Button click="loadRemoteSWF()" label="Load Remote SWF" />
+		<mx:CheckBox label="Use Local File" id="localCheckbox" change="switchLocalRemote()" />
+		<mx:ViewStack width="100%" id="localRemoteBox">
+			<mx:HBox id="remoteBox">
+				<mx:Label text="URL of SWF" /><mx:TextInput id="urlInfo" width="100%" /><mx:Button click="loadRemoteSWF()" label="Load Remote SWF" />	
+			</mx:HBox>		
+			<mx:HBox id="localBox">
+				<mx:Label text="File Name" /><mx:TextInput id="fileInfo" width="100%" /><mx:Button click="loadLocalSWF()" label="Load Local SWF" />
+			</mx:HBox>
+		</mx:ViewStack>	
 	</mx:HBox>
 	<mx:ViewStack creationPolicy="all" selectedChild="{selectBox(model.currentState)}" width="100%" height="100%">
 	<mx:HBox id="informationBox" width="100%" height="100%" verticalAlign="middle">
@@ -95,11 +129,13 @@
 				</mx:FormItem>			
 			</mx:Form>		
 		</mx:VBox>
+		<mx:HDividedBox width="100%" height="100%" label="Tags">
+			<mx:List dataProvider="{model.tags}" id="tagList" width="30%" height="100%" click="tagInfo(event)" toolTip="Click For More Info" />
+			<mx:TextArea editable="false" id="tagData" width="70%" height="100%" />
+		</mx:HDividedBox>
 	</mx:TabNavigator>
 
-	<mx:VBox width="100%" height="100%" label="Hex/Ascii">
-		<mx:TextArea id="dataText" fontFamily="Courier" editable="false" width="100%" height="100%" fontSize="14" />
-	</mx:VBox>
+
 		
 	</mx:ViewStack>
 </mx:VBox>
