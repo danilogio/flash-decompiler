@@ -1,20 +1,6 @@
 package com.ludicast.decompiler.util
 {
-	import com.ludicast.decompiler.util.tag.DefineScalingGridTag;
-	import com.ludicast.decompiler.util.tag.EnableDebugger2Tag;
-	import com.ludicast.decompiler.util.tag.EnableDebuggerTag;
-	import com.ludicast.decompiler.util.tag.EndTag;
-	import com.ludicast.decompiler.util.tag.ExportAssetsTag;
-	import com.ludicast.decompiler.util.tag.FileAttributesTag;
-	import com.ludicast.decompiler.util.tag.FrameLabelTag;
-	import com.ludicast.decompiler.util.tag.ImportAssets2Tag;
-	import com.ludicast.decompiler.util.tag.ImportAssetsTag;
-	import com.ludicast.decompiler.util.tag.MetaDataTag;
-	import com.ludicast.decompiler.util.tag.ProtectTag;
-	import com.ludicast.decompiler.util.tag.ScriptLimitsTag;
-	import com.ludicast.decompiler.util.tag.SetBackgroundColorTag;
-	import com.ludicast.decompiler.util.tag.SetTabIndexTag;
-	import com.ludicast.decompiler.util.tag.SymbolClassTag;
+	import com.ludicast.decompiler.util.tag.*;
 	import com.ludicast.decompiler.vo.Tag;
 	
 	public class TagFactory
@@ -23,10 +9,30 @@ package com.ludicast.decompiler.util
 			switch (id) {
 				case 0: 
 					return new EndTag();
+				case 1: 
+					return new ShowFrameTag();
+				case 2: 
+					return new DefineShapeTag();
+				case 4: 
+					return new PlaceObjectTag();
+				case 5: 
+					return new RemoveObjectTag();
 				case 9:
 					return new SetBackgroundColorTag();
+				case 12:
+					return new DoActionTag();				
+				case 22: 
+					return new DefineShape2Tag();
 				case 24:
 					return new ProtectTag();
+				case 26: 
+					return new PlaceObject2Tag();
+				case 28: 
+					return new RemoveObject2Tag();					
+				case 32: 
+					return new DefineShape3Tag();
+				case 39:
+					return new DefineSpriteTag();
 				case 43:
 					return new FrameLabelTag();
 				case 56:
@@ -43,6 +49,8 @@ package com.ludicast.decompiler.util
 					return new SetTabIndexTag();
 				case 69:
 					return new FileAttributesTag();
+				case 70: 
+					return new PlaceObject3Tag();
 				case 71:
 					return new ImportAssets2Tag();
 				case 76:
@@ -51,6 +59,12 @@ package com.ludicast.decompiler.util
 					return new MetaDataTag();
 				case 78:
 					return new DefineScalingGridTag();
+				case 82:
+					return new DoABCTag();
+				case 83: 
+					return new DefineShape4Tag();				
+				case 86:
+					return new DefineSceneAndFrameLabelTag();
 				default:
 					return new Tag();
 			}
