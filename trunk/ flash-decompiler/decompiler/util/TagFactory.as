@@ -22,7 +22,7 @@ package com.ludicast.decompiler.util
 				case 7: 
 					return new DefineButtonTag();
 				case 8: 
-					return new JpegTablesTag();
+					return new JPEGTablesTag();
 				case 9:
 					return new SetBackgroundColorTag();
 				case 10:

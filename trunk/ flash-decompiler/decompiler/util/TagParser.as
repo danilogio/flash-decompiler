@@ -1,5 +1,6 @@
 package com.ludicast.decompiler.util
 {
+	import com.ludicast.decompiler.model.DecompilerModelLocator;
 	import com.ludicast.decompiler.vo.Tag;
 	
 	import flash.utils.ByteArray;
@@ -12,13 +13,19 @@ package com.ludicast.decompiler.util
 			var tags:ArrayCollection = new ArrayCollection();
 			
 			while (array.bytesAvailable) {
-				//trace (readSWFTag(array));
 				tags.addItem(getTag(array));
 			}
-			for (var i:int = 0; i < tags.length; i++) {
-				trace (tags.getItemAt(i))
-			}
 			
+			var data:String = "";
+			for (var i:int = 0; i < tags.length; i++) {
+				var tag:Tag = Tag(tags.getItemAt(i))
+				data += tag.toString() + "\n";
+				data += ByteCodePrinter.prettyPrint(tag.dump) + "\n\n"; 
+			}
+
+
+			
+			DecompilerModelLocator.getInstance().dataString = data;
 			
 			return tags;
 		}
@@ -31,16 +38,12 @@ package com.ludicast.decompiler.util
 				size = data.readUnsignedInt();
 			}
 			var parseLog:String = "new Tag "+id;
-	//		if (handlers[id]!=null) {
+
 				var dump:ByteArray = new ByteArray();
 				if (size!=0) {
 					data.readBytes(dump,0,size);
 				}
 	
-	//			handlers[id](tag, id, size, dump);
-	//		} else {
-	//			data.position += size;
-	//		}
 			parseLog += "\tsize: "+size;
 			var tagObj:Tag = TagFactory.getTagById(id);
 			tagObj.id = id;
