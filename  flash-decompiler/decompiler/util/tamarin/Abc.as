@@ -5,31 +5,34 @@ package com.ludicast.decompiler.util.tamarin {
 	{
 		private var data:ByteArray
 		
-		var major:int
-		var minor:int
+		public var major:int
+		public var minor:int
 		
-		var ints:Array
-		var uints:Array
-		var doubles:Array
-		var strings:Array
-		var namespaces:Array
-		var nssets:Array
-		var names:Array
+		public var ints:Array
+		public var uints:Array
+		public var doubles:Array
+		public var strings:Array
+		public var namespaces:Array
+		public var nssets:Array
+		public var names:Array
 		
-		var defaults:Array = new Array(Constants.constantKinds.length)
-		
-		var methods:Array
-		var instances:Array
-		var classes:Array
-		var scripts:Array
-		
-		var publicNs = new Namespace("")
-		var anyNs = new Namespace("*")
+		public var defaults:Array = new Array(Constants.constantKinds.length)
 
-		var magic:int
+		public var methods:Array
+		public var instances:Array
+		public var classes:Array
+		public var scripts:Array
+		
+		public var publicNs:Namespace = new Namespace("");
+		public var anyNs:Namespace = new Namespace("*");
+
+		public var magic:int;
+		
+		protected var metadata:Array;
 		
 		public function Abc(data:ByteArray)
 		{
+			Constants.reinitConstants();
 			data.position = 0
 			this.data = data
 			magic = data.readInt()
@@ -82,7 +85,7 @@ package com.ludicast.decompiler.util.tamarin {
 			return   result & 0x0fffffff | data.readUnsignedByte()<<28;
 		}
 		
-		public function parseCpool()
+		public function parseCpool():void
 		{
 			var i:int, j:int
 			var n:int
@@ -190,7 +193,7 @@ package com.ludicast.decompiler.util.tamarin {
 				
 				case Constants.CONSTANT_Multiname:
 				case Constants.CONSTANT_MultinameA:
-					var name = strings[readU32()]
+					var name:String = strings[readU32()]
 					names[i] = new Multiname(nssets[readU32()], name)
 					break;
 
@@ -218,7 +221,7 @@ package com.ludicast.decompiler.util.tamarin {
 			methods = []
 			for (var i:int=0; i < method_count; i++)
 			{
-				var m = methods[i] = new MethodInfo()
+				var m:MethodInfo = methods[i] = new MethodInfo()
 				var param_count:int = readU32()
 				m.returnType = names[readU32()]
 				m.paramTypes = []
@@ -252,16 +255,17 @@ package com.ludicast.decompiler.util.tamarin {
 				if (m.flags & Constants.HAS_ParamNames)
 				{
 					// has_paramnames
-					for( var k:int = 0; k < param_count; ++k)
+					for( var k2:int = 0; k2 < param_count; ++k2)
                     {
                         readU32();
                     }
                 }
+                Constants.print(m.format());
 			}
 			Constants.print("MethodInfo count " +method_count+ " size "+(data.position-start)+" "+int(100*(data.position-start)/data.length)+" %")
 		}
 
-		public function parseMetadataInfos()
+		public function parseMetadataInfos():void
 		{
 			var count:int = readU32()
 			metadata = []
@@ -274,18 +278,17 @@ package com.ludicast.decompiler.util.tamarin {
 	            var names:Array = []
 	            for(var q:int = 0; q < values_count; ++q)
 					names[q] = strings[readU32()] // name 
-				for(var q:int = 0; q < values_count; ++q)
-					m[names[q]] = strings[readU32()] // value
+				for(var q2:int = 0; q2 < values_count; ++q2)
+					m[names[q2]] = strings[readU32()] // value
 			}
 		}
 
-		public function parseInstanceInfos():* //Kidwell added *
+		public function parseInstanceInfos():void 
 		{
 			var start:int = data.position
 			var count:int = readU32()
 			instances = []
-			for (var i:int=0; i < count; i++)
-	        {
+			for (var i:int=0; i < count; i++) {
 	        	var t = instances[i] = new Traits()
 	        	t.name = names[readU32()]
 	        	t.base = names[readU32()]
@@ -356,7 +359,7 @@ package com.ludicast.decompiler.util.tamarin {
 			}
 		}
 
-		public function parseClassInfos()
+		public function parseClassInfos():void
 		{
 			var start:int = data.position
 			var count:int = instances.length
@@ -371,11 +374,12 @@ package com.ludicast.decompiler.util.tamarin {
 	        	t.init.name = t.itraits.name + "$cinit"
 	        	t.init.kind = Constants.TRAIT_Method
 	        	parseTraits(t)
+	        	Constants.print(t.toString());
 			}			
 			Constants.print("ClassInfo size "+(data.position-start)+" "+int(100*(data.position-start)/data.length)+"%")
 		}
 
-		public function parseScriptInfos()
+		public function parseScriptInfos():void
 		{
 			var start:int = data.position
 			var count:int = readU32()
@@ -394,7 +398,7 @@ package com.ludicast.decompiler.util.tamarin {
 			Constants.print("ScriptInfo size "+(data.position-start)+" "+int(100*(data.position-start)/data.length)+" %")
 		}
 
-		public function parseMethodBodies()
+		public function parseMethodBodies():void
 		{
 			var start:int = data.position
 			var count:int = readU32()
@@ -427,23 +431,22 @@ package com.ludicast.decompiler.util.tamarin {
 			Constants.print("MethodBodies size "+(data.position-start)+" "+int(100*(data.position-start)/data.length)+" %")
 		}
 		
-		public function dump(indent:String="")
-		{
-			for each (var t in scripts)
+		public function dump(indent:String=""):void {
+			for each (var t:Traits in scripts)
 			{
 				Constants.print(indent+t.name)
 				t.dump(this,indent)
 				t.init.dump(this,indent)
 			}
 
-			for each (var m in methods)
+			for each (var m:MethodInfo in methods)
 			{
 				if (m.anon) {
 					m.dump(this,indent)
 				}
 			}
 			
-			Constants.print("OPCODE\tSIZE\t% OF "+totalSize)
+			Constants.print("OPCODE\tSIZE\t% OF "+Constants.totalSize)
 			var done = []
 			for (;;)
 			{
@@ -451,7 +454,7 @@ package com.ludicast.decompiler.util.tamarin {
 				var maxsize:int = 0;
 				for (var i:int=0; i < 256; i++)
 				{
-					if (opSizes[i] > maxsize && !done[i])
+					if (Constants.opSizes[i] > maxsize && !done[i])
 					{
 						max = i;
 						maxsize = Constants.opSizes[i];
@@ -460,7 +463,7 @@ package com.ludicast.decompiler.util.tamarin {
 				if (max == -1)
 					break;
 				done[max] = 1;
-				Constants.print(Constants.opNames[max]+"\t"+int(Constants.opSizes[max])+"\t"+int(100*Constants.opSizes[max]/totalSize)+"%")
+				Constants.print(Constants.opNames[max]+"\t"+int(Constants.opSizes[max])+"\t"+int(100*Constants.opSizes[max]/Constants.totalSize)+"%")
 			}
 		}
 	}

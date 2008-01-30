@@ -4,22 +4,20 @@ package com.ludicast.decompiler.util.tamarin
 	
 	public class MethodInfo extends MemberInfo
 	{
-		protected var totalSize:int
-		protected var opSizes:Array = new Array(256)
 
 
-		protected var flags:int
-		protected var debugName:* //Kidwell added *
-		protected var paramTypes:* //Kidwell added *
-		protected var optionalValues:* //Kidwell added *
-		protected var returnType:* //Kidwell added *
-		protected var local_count:int
-		protected var max_scope:int
-		protected var max_stack:int
-		protected var code_length:uint
-		protected var code:ByteArray
-		protected var activation:Traits
-		protected var anon:Boolean
+		public var flags:int
+		public var debugName:* //Kidwell added *
+		public var paramTypes:* //Kidwell added *
+		public var optionalValues:* //Kidwell added *
+		public var returnType:* //Kidwell added *
+		public var local_count:int
+		public var max_scope:int
+		public var max_stack:int
+		public var code_length:uint
+		public var code:ByteArray
+		public var activation:Traits
+		public var anon:Boolean
 
 		public function toString():String
 		{
@@ -205,8 +203,8 @@ package com.ludicast.decompiler.util.tamarin
 							break
 					}
 					var size:int = code.position - start
-					totalSize += size
-					opSizes[opcode] = int(opSizes[opcode]) + size
+					Constants.totalSize += size
+					Constants.opSizes[opcode] = int(Constants.opSizes[opcode]) + size
 					Constants.print(s)
 				}
 				Constants.print(oldindent+"}\n")

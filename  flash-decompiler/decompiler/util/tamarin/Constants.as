@@ -4,7 +4,7 @@ package com.ludicast.decompiler.util.tamarin
 	public class Constants
 	{
 	public static function print(string:String):void {
-		
+		trace (string);
 	}
 	
 
@@ -493,6 +493,15 @@ package com.ludicast.decompiler.util.tamarin
     public static const CLASS_FLAG_final		:int = 0x02;
     public static const CLASS_FLAG_interface	:int = 0x04;
 	
+	
+	//TODO - move to parsing singleton
+	public static var totalSize:int;
+	public static var opSizes:Array;
+	
+	public static function reinitConstants():void {
+		totalSize = 0;
+		opSizes = new Array(256);
+	}
 	
 	}
 }

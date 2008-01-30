@@ -3,7 +3,7 @@ package com.ludicast.decompiler.util.tamarin
 
 	public dynamic class MetaData
 	{
-		protected var name:String
+		public var name:String
 		public function toString():String 
 		{
 			var last:String
