@@ -72,7 +72,7 @@ package com.ludicast.decompiler.util
 			return s + Constants.traitKinds[kind] + " " + name + "(" + paramTypes + "):" + returnType + "\t/* disp_id " + id + "*/"
 		}
 
-		protected function dump(abc:Abc, indent:String, attr:String=""):*  //Kidwell added *
+		public function dump(abc:Abc, indent:String, attr:String=""):*  //Kidwell added *
 		{
 			Constants.print("")
 
