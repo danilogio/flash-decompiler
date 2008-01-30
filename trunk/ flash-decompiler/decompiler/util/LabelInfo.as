@@ -487,7 +487,7 @@ package com.ludicast.decompiler.util
 
 	public dynamic class LabelInfo
 	{
-		var count:int
+		public var count:int
 		public function labelFor (target:int):String
 		{
 			if (target in this)

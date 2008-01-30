@@ -48,8 +48,8 @@ package com.ludicast.decompiler.util.tag
 			abcData.readBytes(newArray,0,abcData.length - abcData.position);
 			abcData = newArray;
 			abcData.endian = Endian.LITTLE_ENDIAN;
-			trace (ByteCodePrinter.prettyPrint(abcData));
-			var abc:Abc = new Abc(abcData);
+			//trace (ByteCodePrinter.prettyPrint(abcData));
+			//var abc:Abc = new Abc(abcData);
 			return name;
 		}
 

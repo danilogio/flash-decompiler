@@ -524,26 +524,26 @@ package com.ludicast.decompiler.util
 	
 	public class Traits
 	{
-		var name
-		var init:MethodInfo
-		var itraits:Traits
-		var base
-		var flags:int
-		var protectedNs:Namespace
-		const interfaces:Array = []
-		const names:Object = {}
-		const slots:Array = []
-		const methods:Array = []
-		const members:Array = []
+		public var name:*
+		public var init:MethodInfo
+		public var itraits:Traits
+		public var base:*
+		public var flags:int
+		public var protectedNs:Namespace
+		public const interfaces:Array = []
+		public const names:Object = {}
+		public const slots:Array = []
+		public const methods:Array = []
+		public const members:Array = []
 		
 		public function toString():String
 		{
 			return String(name)
 		}
 		
-		public function dump(abc:Abc, indent:String, attr:String="")
+		public function dump(abc:Abc, indent:String, attr:String=""):*
 		{
-			for each (var m in members) 
+			for each (var m:* in members) 
 				m.dump(abc,indent,attr)
 		}
 	}
