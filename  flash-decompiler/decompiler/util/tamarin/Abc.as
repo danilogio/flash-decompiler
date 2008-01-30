@@ -407,24 +407,24 @@ package com.ludicast.decompiler.util.tamarin {
 	        	var m = methods[readU32()]
 				m.max_stack = readU32()
 	        	m.local_count = readU32()
-	        	var initScopeDepth = readU32()
-	        	var maxScopeDepth = readU32()
+	        	var initScopeDepth:Number = readU32()
+	        	var maxScopeDepth:Number = readU32()
 	        	m.max_scope = maxScopeDepth - initScopeDepth
-	        	var code_length = readU32()
+	        	var code_length:Number = readU32()
 	        	m.code = new ByteArray()
 				m.code.endian = "littleEndian"
 	        	if (code_length > 0)
 		        	data.readBytes(m.code, 0, code_length)
-	       		var ex_count = readU32()
+	       		var ex_count:Number = readU32()
 	       		for (var j:int = 0; j < ex_count; j++)
 	       		{
-	       			var from = readU32()
-	       			var to = readU32()
-	       			var target = readU32()
-	       			var type = names[readU32()]
+	       			var from:Number = readU32()
+	       			var to:Number = readU32()
+	       			var target:Number = readU32()
+	       			var type:Number = names[readU32()]
 					//print("magic " + magic.toString(16))
 					//if (magic >= (46<<16|16))
-						var name = names[readU32()];
+					var name:Number = names[readU32()];
 	       		}
 	       		parseTraits(m.activation = new Traits)
 	        }
