@@ -1,4 +1,4 @@
-package com.ludicast.decompiler.util
+package com.ludicast.decompiler.util.tamarin
 {
 
 	public class Constants
