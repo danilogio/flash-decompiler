@@ -17,7 +17,7 @@ package com.ludicast.decompiler.util.tamarin
 		
 		public function toString():String
 		{
-			return String(name)
+			return String(name);
 		}
 		
 		public function dump(abc:Abc, indent:String, attr:String=""):*

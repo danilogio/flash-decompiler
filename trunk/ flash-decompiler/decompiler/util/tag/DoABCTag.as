@@ -1,7 +1,6 @@
 package com.ludicast.decompiler.util.tag
 {
-	import com.ludicast.decompiler.util.Abc;
-	import com.ludicast.decompiler.util.ByteCodePrinter;
+	import com.ludicast.decompiler.util.tamarin.Abc;
 	import com.ludicast.decompiler.vo.Tag;
 	
 	import flash.utils.ByteArray;
@@ -23,14 +22,11 @@ package com.ludicast.decompiler.util.tag
 			abcData = new ByteArray();
 
 			abcData.endian = Endian.LITTLE_ENDIAN;
-		//	trace ("here");
-		//	trace (ByteCodePrinter.prettyPrint(array));
-		//	trace ("there");
+
 			for (var i:Number = 4; i < array.length; i++) {
 				abcData[i - 4] = array[i];
 			}
-	
-	//try diff...
+
 			trace ("set bd" + _byteData);
 		}
 
@@ -43,14 +39,50 @@ package com.ludicast.decompiler.util.tag
 			//return "Minor " + abcData.readUnsignedShort() + "\n" + "Major " + abcData.readUnsignedShort(); 
 			var name:String = readString();//return ByteCodePrinter.prettyPrint(abcData);
 			var newArray:ByteArray = new ByteArray();
-			trace ("newpos" + abcData.position);
-			trace ("nl " + name.length);
+			//trace ("newpos" + abcData.position);
+			//trace ("nl " + name.length);
 			abcData.readBytes(newArray,0,abcData.length - abcData.position);
 			abcData = newArray;
 			abcData.endian = Endian.LITTLE_ENDIAN;
 			//trace (ByteCodePrinter.prettyPrint(abcData));
-			//var abc:Abc = new Abc(abcData);
-			return name;
+			var abc:Abc = new Abc(abcData);
+			var retString:String = name;
+			retString += "Magic:" + abc.magic + "\n";
+			retString += "Minor:" + abc.minor + "\n";
+			retString += "Major:" + abc.major + "\n";
+		
+			retString += "Public Namespaces:" + abc.publicNs + "\n"; 
+		
+			retString += "\nNames:\n";	
+			for (var i:int = 0; i < abc.names.length; i++) {
+				retString += "Name " + i + ":" + abc.names[i] + "\n"		
+			}
+
+			retString += "\nNamespaces:\n";													
+			for (i = 0; i < abc.namespaces.length; i++) {
+				retString += "Namespaces " + i + ":" + abc.namespaces[i] + "\n";	
+			}
+
+			retString += "\nClasses:\n";													
+			for (i = 0; i < abc.classes.length; i++) {
+				retString += "Class " + i + ":" + abc.classes[i] + "\n";	
+			}
+
+			retString += "\nnsset:\n";													
+			for (i = 0; i < abc.nssets.length; i++) {
+				retString += "nsset " + i + ":" + abc.nssets[i] + "\n";		
+			}
+
+			retString += "\nStrings:\n";	
+			for (i = 0; i < abc.strings.length; i++) {
+				retString += "string " + i + ":" + abc.nssets[i] + "\n";		
+			}		
+														
+			//trace (abc.ints);
+			//trace (abc.doubles);		
+			//trace (abc.scripts);
+			//return name;
+			return retString;
 		}
 
 
