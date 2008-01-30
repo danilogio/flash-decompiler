@@ -11,6 +11,8 @@ package com.ludicast.decompiler.util.tag
 	{
 		public var flags:uint;
 		public var abcData:ByteArray;
+		public var abc:Abc;
+		public var name:String;
 		
 		public override function toString ():String {
 			return "DoABC Tag: " + super.toString();
@@ -37,15 +39,18 @@ package com.ludicast.decompiler.util.tag
 
 		public function parseDoABC():String {
 			//return "Minor " + abcData.readUnsignedShort() + "\n" + "Major " + abcData.readUnsignedShort(); 
-			var name:String = readString();//return ByteCodePrinter.prettyPrint(abcData);
+
 			var newArray:ByteArray = new ByteArray();
 			//trace ("newpos" + abcData.position);
 			//trace ("nl " + name.length);
-			abcData.readBytes(newArray,0,abcData.length - abcData.position);
-			abcData = newArray;
-			abcData.endian = Endian.LITTLE_ENDIAN;
+			if (abc == null) {
+				name = readString();//return ByteCodePrinter.prettyPrint(abcData);
+				abcData.readBytes(newArray,0,abcData.length - abcData.position);
+				abcData = newArray;
+				abcData.endian = Endian.LITTLE_ENDIAN;
 			//trace (ByteCodePrinter.prettyPrint(abcData));
-			var abc:Abc = new Abc(abcData);
+				abc = new Abc(abcData);
+			}
 			var retString:String = name;
 			retString += "Magic:" + abc.magic + "\n";
 			retString += "Minor:" + abc.minor + "\n";
@@ -75,9 +80,39 @@ package com.ludicast.decompiler.util.tag
 
 			retString += "\nStrings:\n";	
 			for (i = 0; i < abc.strings.length; i++) {
-				retString += "string " + i + ":" + abc.nssets[i] + "\n";		
-			}		
-														
+				retString += "string " + i + ":" + abc.strings[i] + "\n";		
+			}
+
+			retString += "\nInts:\n";	
+			for (i = 0; i < abc.ints.length; i++) {
+				retString += "int " + i + ":" + abc.ints[i] + "\n";		
+			}
+				
+			retString += "\Doubles:\n";	
+			for (i = 0; i < abc.doubles.length; i++) {
+				retString += "Double " + i + ":" + abc.doubles[i] + "\n";		
+			}
+
+			retString += "\Scripts:\n";	
+			for (i = 0; i < abc.scripts.length; i++) {
+				retString += "Script " + i + ":" + abc.scripts[i] + "\n";		
+			}
+
+			retString += "\Defaults:\n";	
+			for (i = 0; i < abc.defaults.length; i++) {
+				retString += "Default " + i + ":" + abc.defaults[i] + "\n";		
+			}
+
+			retString += "\Instances:\n";	
+			for (i = 0; i < abc.instances.length; i++) {
+				retString += "Instance " + i + ":" + abc.instances[i] + "\n";		
+			}
+										
+			retString += "\nUints:\n";	
+			for (i = 0; i < abc.uints.length; i++) {
+				retString += "Uint " + i + ":" + abc.uints[i] + "\n";		
+			}
+															
 			//trace (abc.ints);
 			//trace (abc.doubles);		
 			//trace (abc.scripts);
