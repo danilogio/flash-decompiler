@@ -35,6 +35,7 @@ package com.ludicast.decompiler.command
 				model.currentState = DecompilerModelLocator.PARSED_STATE;
 			} catch (error:Error) {
 				trace (error);
+				trace (error.getStackTrace());
 				model.currentState = DecompilerModelLocator.ERROR_STATE;
 				return;				
 			}
