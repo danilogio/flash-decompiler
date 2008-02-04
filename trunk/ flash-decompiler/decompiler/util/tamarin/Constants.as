@@ -4,7 +4,7 @@ package com.ludicast.decompiler.util.tamarin
 	public class Constants
 	{
 	public static function print(string:String):void {
-		trace (string);
+	//	trace (string);
 	}
 	
 

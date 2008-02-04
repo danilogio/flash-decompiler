@@ -1,10 +1,13 @@
 package com.ludicast.decompiler.util.tag
 {
+	import com.ludicast.decompiler.view.tags.BackgroundTagView;
 	import com.ludicast.decompiler.vo.Tag;
 	
 	import flash.utils.ByteArray;
+	
+	import mx.core.Container;
 
-	public class SetBackgroundColorTag extends Tag
+	public class SetBackgroundColorTag extends Tag implements IDescribableComponent
 	{
 		public var red:uint;
 		public var green:uint;
@@ -23,6 +26,13 @@ package com.ludicast.decompiler.util.tag
 	
 		public override function get tagData():String {
 			return "Red:" + red + " Green:" + green + " Blue:" + blue;
+		}
+		
+		public function getDescribingComponent():Container {
+			var desc:BackgroundTagView = new BackgroundTagView();
+			desc.backgoundColor = uint(red << 16 | green << 8 | blue);
+			
+			return desc;
 		}
 	}
 }
