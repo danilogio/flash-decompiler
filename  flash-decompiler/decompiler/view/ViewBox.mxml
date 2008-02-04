@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%" height="100%" creationComplete="initializeApp()" >
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%" height="100%" creationComplete="initializeApp()" xmlns:view="com.ludicast.decompiler.view.*">
 			<mx:Script>
 		<![CDATA[
 			import com.ludicast.decompiler.util.ByteCodePrinter;
@@ -81,19 +81,7 @@
 				}
 			}	
 			
-			protected function tagInfo(event:Event):void {
-				if (event.target is UITextField) {
-					showTagData (tagList.selectedIndex);
-				}
-			}	
-					
-			protected function showTagData(tagID:Number):void {
-				var tag:Tag = model.tags.getItemAt(tagID) as Tag;
-				trace ("tag" + tag);
-				var tagDump:String = tag.tagData;
-				tagData.text = tagDump;
-				
-			}		
+
 		]]>
 	</mx:Script>
 
@@ -140,10 +128,7 @@
 				</mx:FormItem>			
 			</mx:Form>		
 		</mx:VBox>
-		<mx:HDividedBox width="100%" height="100%" label="Tags">
-			<mx:List dataProvider="{model.tags}" id="tagList" width="30%" height="100%" click="tagInfo(event)" toolTip="Click For More Info" />
-			<mx:TextArea editable="false" id="tagData" width="70%" height="100%" />
-		</mx:HDividedBox>
+		<view:TagDisplay width="100%" height="100%" label="tags"/>
 	</mx:TabNavigator>
 
 

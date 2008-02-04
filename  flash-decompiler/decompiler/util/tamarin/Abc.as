@@ -155,7 +155,7 @@ package com.ludicast.decompiler.util.tamarin {
 			for (i=1; i < n; i++)
 			{
 				var count:int = readU32()
-				var nsset = nssets[i] = []
+				var nsset:Array = nssets[i] = []
 				for (j=0; j < count; j++)
 					nsset[j] = namespaces[readU32()]
 			}
@@ -236,7 +236,7 @@ package com.ludicast.decompiler.util.tamarin {
 					m.optionalValues = []
 					for( var k:int = param_count-optional_count; k < param_count; ++k)
 					{
-						var index = readU32()    // optional value index
+						var index:Number = readU32()    // optional value index
 						var kind:int = data.readByte() // kind byte for each default value
 						if (index == 0)
 						{
@@ -272,7 +272,7 @@ package com.ludicast.decompiler.util.tamarin {
 			for (var i:int=0; i < count; i++)
 	        {
 				// MetadataInfo
-				var m = metadata[i] = new MetaData()
+				var m:MetaData = metadata[i] = new MetaData()
 				m.name = strings[readU32()];
 	            var values_count:int = readU32();
 	            var names:Array = []
@@ -289,16 +289,16 @@ package com.ludicast.decompiler.util.tamarin {
 			var count:int = readU32()
 			instances = []
 			for (var i:int=0; i < count; i++) {
-	        	var t = instances[i] = new Traits()
+	        	var t:Traits = instances[i] = new Traits()
 	        	t.name = names[readU32()]
 	        	t.base = names[readU32()]
 	        	t.flags = data.readByte()
 				if (t.flags & 8)
 					t.protectedNs = namespaces[readU32()]
-	        	var interface_count = readU32()
+	        	var interface_count:Number = readU32()
 	        	for (var j:int=0; j < interface_count; j++)
 	        		t.interfaces[i] = names[readU32()]
-	        	var m = t.init = methods[readU32()]
+	        	var m:MethodInfo = t.init = methods[readU32()]
 	        	m.name = t.name
 	        	m.kind = Constants.TRAIT_Method
 	        	m.id = -1
@@ -309,24 +309,25 @@ package com.ludicast.decompiler.util.tamarin {
 		
 		public function parseTraits(t:Traits):* //Kidwell added *
 		{
-			var namecount = readU32()
+			var namecount:Number = readU32()
 			for (var i:int=0; i < namecount; i++)
 			{
-				var name = names[readU32()]
-				var tag = data.readByte()
-				var kind = tag & 0xf
-				var member
+				var name:String = names[readU32()]
+				var tag:Number = data.readByte()
+				var kind:Number = tag & 0xf
+				var member:MemberInfo;
 				switch(kind) {
 				case Constants.TRAIT_Slot:
 				case Constants.TRAIT_Const:
 				case Constants.TRAIT_Class:
-					var slot = member = new SlotInfo()
+					member = new SlotInfo();
+					var slot:SlotInfo = SlotInfo(member);
 					slot.id = readU32()
 					t.slots[slot.id] = slot
 					if (kind==Constants.TRAIT_Slot || kind==Constants.TRAIT_Const)
 					{
 						slot.type = names[readU32()]
-						var index=readU32()
+						var index:Number=readU32()
 						if (index)
 							slot.value = defaults[data.readByte()][index]
 					}
@@ -338,11 +339,11 @@ package com.ludicast.decompiler.util.tamarin {
 				case Constants.TRAIT_Method:
 				case Constants.TRAIT_Getter:
 				case Constants.TRAIT_Setter:
-					var disp_id = readU32()
-					var method = member = methods[readU32()]
-					t.methods[disp_id] = method
-					method.id = disp_id
-					//print("\t",traitKinds[kind],name,disp_id,method,"// disp_id", disp_id)
+					var disp_id:Number = readU32();
+					member = methods[readU32()];
+					var method:MethodInfo = MethodInfo(member);
+					t.methods[disp_id] = method;
+					method.id = disp_id;
 					break;
 				}
 				if (!member)
@@ -386,7 +387,7 @@ package com.ludicast.decompiler.util.tamarin {
 			scripts = []
 			for (var i:int=0; i < count; i++)
 	        {
-	        	var t = new Traits()
+	        	var t:Traits = new Traits()
 				scripts[i] = t
 	        	t.name = "script" + i
 	        	t.base = names[0] // Object
@@ -404,7 +405,7 @@ package com.ludicast.decompiler.util.tamarin {
 			var count:int = readU32()
 			for (var i:int=0; i < count; i++)
 	        {
-	        	var m = methods[readU32()]
+	        	var m:MethodInfo = methods[readU32()]
 				m.max_stack = readU32()
 	        	m.local_count = readU32()
 	        	var initScopeDepth:Number = readU32()
@@ -447,7 +448,7 @@ package com.ludicast.decompiler.util.tamarin {
 			}
 			
 			Constants.print("OPCODE\tSIZE\t% OF "+Constants.totalSize)
-			var done = []
+			var done:Array = [];
 			for (;;)
 			{
 				var max:int = -1;

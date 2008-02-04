@@ -1,6 +1,8 @@
 package com.ludicast.decompiler.util.tag
 {
 	import com.ludicast.decompiler.util.tamarin.Abc;
+	import com.ludicast.decompiler.util.tamarin.SlotInfo;
+	import com.ludicast.decompiler.util.tamarin.Traits;
 	import com.ludicast.decompiler.vo.Tag;
 	
 	import flash.utils.ByteArray;
@@ -63,6 +65,11 @@ package com.ludicast.decompiler.util.tag
 				retString += "Name " + i + ":" + abc.names[i] + "\n"		
 			}
 
+			retString += "\nMethods:\n";	
+			for (i = 0; i < abc.methods.length; i++) {
+				retString += "Method " + i + ":" + abc.methods[i] + "\n"		
+			}
+
 			retString += "\nNamespaces:\n";													
 			for (i = 0; i < abc.namespaces.length; i++) {
 				retString += "Namespaces " + i + ":" + abc.namespaces[i] + "\n";	
@@ -70,7 +77,7 @@ package com.ludicast.decompiler.util.tag
 
 			retString += "\nClasses:\n";													
 			for (i = 0; i < abc.classes.length; i++) {
-				retString += "Class " + i + ":" + abc.classes[i] + "\n";	
+				retString += "Class " + i + ":" + abc.classes[i] + "\n";
 			}
 
 			retString += "\nnsset:\n";													
@@ -95,7 +102,25 @@ package com.ludicast.decompiler.util.tag
 
 			retString += "\Scripts:\n";	
 			for (i = 0; i < abc.scripts.length; i++) {
-				retString += "Script " + i + ":" + abc.scripts[i] + "\n";		
+				var traits:Traits = Traits(abc.scripts[i]);
+				retString += "Script " + i + ":" + traits + "\n";
+				retString +=  "********************";
+				retString += "name:   " + traits.name + "\n";		
+				retString += "methods:   " + traits.methods + "\n";	
+				
+				retString += "members:   " + traits.members + "\n";
+				for (var j:Number = 0; j < traits.members.length; j++) {
+					if (traits.members[j] is SlotInfo) {
+						var slot:SlotInfo  = traits.members[j] as SlotInfo;
+						retString += "name:" + (slot.name) + "\n";
+						retString += "metadata:" + (slot.metadata) + "\n";
+						retString += "type:" + (slot.type) + "\n";
+						retString += "value:" + (slot.value) + "\n";
+						retString += "kind:" + (slot.kind) + "\n";
+					}
+				}
+				
+				retString += "\n\n\n\n";	
 			}
 
 			retString += "\Defaults:\n";	
@@ -112,10 +137,9 @@ package com.ludicast.decompiler.util.tag
 			for (i = 0; i < abc.uints.length; i++) {
 				retString += "Uint " + i + ":" + abc.uints[i] + "\n";		
 			}
-															
+												
 			//trace (abc.ints);
 			//trace (abc.doubles);		
-			//trace (abc.scripts);
 			//return name;
 			return retString;
 		}
