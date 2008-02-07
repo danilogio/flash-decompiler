@@ -1,6 +1,7 @@
 package com.ludicast.decompiler.util.tag
 {
 	import com.ludicast.decompiler.util.tamarin.Abc;
+	import com.ludicast.decompiler.util.tamarin.MethodInfo;
 	import com.ludicast.decompiler.util.tamarin.SlotInfo;
 	import com.ludicast.decompiler.util.tamarin.Traits;
 	import com.ludicast.decompiler.vo.Tag;
@@ -67,7 +68,12 @@ package com.ludicast.decompiler.util.tag
 
 			retString += "\nMethods:\n";	
 			for (i = 0; i < abc.methods.length; i++) {
-				retString += "Method " + i + ":" + abc.methods[i] + "\n"		
+				var method:MethodInfo = MethodInfo(abc.methods[i]);
+				retString += "Method " + i + ":" + method + "\n"		
+				retString += processABC(method.code) + "\n";
+				retString += method.debugName + "\n";
+				retString += method.code_length + "\n";							
+				retString += method.code_length + "\n";			
 			}
 
 			retString += "\nNamespaces:\n";													
@@ -76,8 +82,14 @@ package com.ludicast.decompiler.util.tag
 			}
 
 			retString += "\nClasses:\n";													
-			for (i = 0; i < abc.classes.length; i++) {
-				retString += "Class " + i + ":" + abc.classes[i] + "\n";
+			for (i = 0; i < abc.classes.length; i++) {				
+				var cls:Traits = Traits(abc.classes[i]);
+				retString += "Class " + i + ":" + cls + "\n";
+				retString += "*********************\n";				
+				retString += cls.methods + "\n";
+				retString += cls.interfaces + "\n";				
+				retString += cls.members + "\n";	
+				retString += cls.init + "\n";					
 			}
 
 			retString += "\nnsset:\n";													
@@ -142,6 +154,15 @@ package com.ludicast.decompiler.util.tag
 			//trace (abc.doubles);		
 			//return name;
 			return retString;
+		}
+
+		private function processABC(rawBytes:*):String {
+			var array:ByteArray = ByteArray(rawBytes);
+			if (array == null) {
+				return "Empty Code Section";
+			}
+			return ("Code array " + array.length);
+			
 		}
 
 
