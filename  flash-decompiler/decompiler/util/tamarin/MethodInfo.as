@@ -7,10 +7,10 @@ package com.ludicast.decompiler.util.tamarin
 
 
 		public var flags:int
-		public var debugName:* //Kidwell added *
-		public var paramTypes:* //Kidwell added *
-		public var optionalValues:* //Kidwell added *
-		public var returnType:* //Kidwell added *
+		public var debugName:*;
+		public var paramTypes:*;
+		public var optionalValues:*;
+		public var returnType:*;
 		public var local_count:int
 		public var max_scope:int
 		public var max_stack:int
