@@ -4,10 +4,13 @@ package com.ludicast.decompiler.util.tag
 	import com.ludicast.decompiler.util.tamarin.MethodInfo;
 	import com.ludicast.decompiler.util.tamarin.SlotInfo;
 	import com.ludicast.decompiler.util.tamarin.Traits;
+	import com.ludicast.decompiler.vo.AS3Class;
 	import com.ludicast.decompiler.vo.Tag;
 	
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
+	
+	import mx.collections.ArrayCollection;
 	
 	
 	public class DoABCTag extends Tag
@@ -16,6 +19,18 @@ package com.ludicast.decompiler.util.tag
 		public var abcData:ByteArray;
 		public var abc:Abc;
 		public var name:String;
+
+		public var parsed:Boolean;
+
+		public var classes:ArrayCollection;
+		public var names:ArrayCollection;
+		public var methods:ArrayCollection;
+		public var namespaces:ArrayCollection;		
+
+		public var magic:Number;
+		public var minor:Number;		
+		public var major:Number;		
+		public var publicNs:Namespace;
 		
 		public override function toString ():String {
 			return "DoABC Tag: " + super.toString();
@@ -39,60 +54,74 @@ package com.ludicast.decompiler.util.tag
 			return "Flags:" + flags  + " " + byteData[0] + " " +byteData[1] + " " + byteData[2] + " " + byteData[3] + 
 				   "\n\nDoABC\n\n" + parseDoABC ();
 		}		
+		
 
 		public function parseDoABC():String {
-			//return "Minor " + abcData.readUnsignedShort() + "\n" + "Major " + abcData.readUnsignedShort(); 
-
+			
 			var newArray:ByteArray = new ByteArray();
-			//trace ("newpos" + abcData.position);
-			//trace ("nl " + name.length);
-			if (abc == null) {
-				name = readString();//return ByteCodePrinter.prettyPrint(abcData);
-				abcData.readBytes(newArray,0,abcData.length - abcData.position);
-				abcData = newArray;
-				abcData.endian = Endian.LITTLE_ENDIAN;
-			//trace (ByteCodePrinter.prettyPrint(abcData));
-				abc = new Abc(abcData);
+			if (parsed) {
+				return "parsed already";
 			}
-			var retString:String = name;
-			retString += "Magic:" + abc.magic + "\n";
-			retString += "Minor:" + abc.minor + "\n";
-			retString += "Major:" + abc.major + "\n";
+			parsed = true;
+			
+			name = readString();
+			abcData.readBytes(newArray,0,abcData.length - abcData.position);
+			abcData = newArray;
+			abcData.endian = Endian.LITTLE_ENDIAN;			
+			abc = new Abc(abcData);
+			
+			magic = abc.magic;
+			minor = abc.minor;
+			major = abc.major;
+			publicNs = abc.publicNs; 
+			
 		
-			retString += "Public Namespaces:" + abc.publicNs + "\n"; 
-		
-			retString += "\nNames:\n";	
+			names = new ArrayCollection();
 			for (var i:int = 0; i < abc.names.length; i++) {
-				retString += "Name " + i + ":" + abc.names[i] + "\n"		
+				names.addItem(abc.names[i]);
 			}
 
-			retString += "\nMethods:\n";	
+			methods = new ArrayCollection();
 			for (i = 0; i < abc.methods.length; i++) {
 				var method:MethodInfo = MethodInfo(abc.methods[i]);
-				retString += "Method " + i + ":" + method + "\n"		
+		/*		retString += "Method " + i + ":" + method + "\n"		
 				retString += processABC(method.code) + "\n";
 				retString += method.debugName + "\n";
 				retString += method.code_length + "\n";							
 				retString += method.code_length + "\n";			
+			*/
+				methods.addItem(method);
 			}
 
-			retString += "\nNamespaces:\n";													
-			for (i = 0; i < abc.namespaces.length; i++) {
-				retString += "Namespaces " + i + ":" + abc.namespaces[i] + "\n";	
+	//		keepAddingAsParseData...
+			//retString += "\nNamespaces:\n";													
+			namespaces = new ArrayCollection();
+			for (i = 0; i < abc.namespaces.length; i++) {	
+				namespaces.addItem(abc.namespaces[i]);
 			}
-
-			retString += "\nClasses:\n";													
+										
+			classes = new ArrayCollection();	
 			for (i = 0; i < abc.classes.length; i++) {				
-				var cls:Traits = Traits(abc.classes[i]);
-				retString += "Class " + i + ":" + cls + "\n";
+				var clsTraits:Traits = Traits(abc.classes[i]);
+				var cls:AS3Class = new AS3Class(clsTraits.name, clsTraits.name, this);
+				classes.addItem(cls);
+
+
+
+	/*			retString += "*********************\n";		
+				retString += "Class " + i + ":" + cls.className + "\n";
 				retString += "*********************\n";				
 				retString += cls.methods + "\n";
 				retString += cls.interfaces + "\n";				
 				retString += cls.members + "\n";	
 				retString += cls.init + "\n";					
-			}
+*/
+				
 
-			retString += "\nnsset:\n";													
+			}
+/*
+		//	retString += "\nnsset:\n";
+													
 			for (i = 0; i < abc.nssets.length; i++) {
 				retString += "nsset " + i + ":" + abc.nssets[i] + "\n";		
 			}
@@ -154,6 +183,8 @@ package com.ludicast.decompiler.util.tag
 			//trace (abc.doubles);		
 			//return name;
 			return retString;
+			*/
+			return "UNDERGOING MASSIVE REFACTORING FOR MOMENT";
 		}
 
 		private function processABC(rawBytes:*):String {

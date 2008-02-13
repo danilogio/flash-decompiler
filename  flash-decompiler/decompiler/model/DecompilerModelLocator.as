@@ -9,10 +9,11 @@ package com.ludicast.decompiler.model
 	public class DecompilerModelLocator implements ModelLocator {
 		
 	
-		private static var modelLocator : DecompilerModelLocator;      
+	  private static var modelLocator : DecompilerModelLocator;      
       public var swfProps:SWFPropsVO;
-      public var tags:ArrayCollection;
       
+      public var tags:ArrayCollection;
+      public var loadedAS3Classes:ArrayCollection;
       
       public static const LOADING_STATE:String = "loadingState";
       public static const PARSING_STATE:String = "parsingState";
@@ -32,12 +33,14 @@ package com.ludicast.decompiler.model
       	return modelLocator;
       }
   
+  
 	  public function initialize():void {
 
 	  }
 	  
       public function DecompilerModelLocator() 
       {	
+      	
          if ( modelLocator != null ) {
          	throw new Error( "Only one FlexDecompilerModelLocator instance should be instantiated" );	
          } else {
