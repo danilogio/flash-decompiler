@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<flex-config xmlns="http://www.adobe.com/2006/flex-config">
+   <compiler>
+      <theme>
+         <filename>style\shadow.css</filename> 
+      </theme>
+   </compiler>
+</flex-config>
