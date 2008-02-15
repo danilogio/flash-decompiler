@@ -9,5 +9,10 @@ package com.ludicast.decompiler.vo
 		public var width:Number;   
       	public var frameRate:Number;
       	public var frameCount:uint;
+      	public var location:String;
+      	public var remote:Boolean;
+      	public var id:uint;
+      	public var name:String;
+      	public var parsed:Boolean;
 	}
 }

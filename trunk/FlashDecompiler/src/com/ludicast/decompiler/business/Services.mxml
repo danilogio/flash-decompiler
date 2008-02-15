@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>                      
+<services:AIRServiceLocator xmlns:mx       = "http://www.adobe.com/2006/mxml" 
+	                        xmlns:services = "com.ericfeminella.aircairngorm.business.*" 
+	                        xmlns:business = "com.ericfeminella.sql.*" >
+	<mx:Script>
+		<![CDATA[
+		    import flash.filesystem.File;
+			import mx.events.FlexEvent;
+		    
+			public static const RDBMS:String = "rdbms";
+			
+	        protected override function preinitialize(event:FlexEvent) : void
+	        {
+				this.rdbms.open();
+	        }
+		]]>
+	</mx:Script>
+    <business:SQLService id = "rdbms" 
+    	                 localDatabaseFilePath = "{File.applicationDirectory.nativePath}"  
+    	                 localDatabaseFileName = "NewDB.db" />      
+
+</services:AIRServiceLocator>
