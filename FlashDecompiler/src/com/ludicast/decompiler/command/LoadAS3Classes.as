@@ -7,6 +7,7 @@ package com.ludicast.decompiler.command
 	import com.ludicast.decompiler.vo.AS3Class;
 	import com.ludicast.decompiler.vo.Tag;
 	
+	
 	import mx.collections.ArrayCollection;
 
 	public class LoadAS3Classes implements ICommand
