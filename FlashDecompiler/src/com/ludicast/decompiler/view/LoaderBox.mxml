@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%" height="100%" creationComplete="initializeApp()" xmlns:view="com.ludicast.decompiler.view.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Container;
+			import com.adobe.cairngorm.control.CairngormEvent;
+			import com.ludicast.decompiler.controller.DecompilerController;
+			import com.ludicast.decompiler.model.DecompilerModelLocator;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable]
+			protected var model:DecompilerModelLocator;
+			protected var controller:DecompilerController;
+
+			
+			public static const BROWSE_REMOTE_SITE:uint = 0;
+			public static const BROWSE_FILESYSTEM:uint = 1;			
+			public static const BROWSE_DATABASE:uint = 2;
+			
+			//active record in org....
+			
+			
+			[Bindable]
+			protected var methods:ArrayCollection = new ArrayCollection([
+				{label:"Load from remote site", data:BROWSE_REMOTE_SITE},			
+				{label:"Load from file", data:BROWSE_FILESYSTEM},
+				{label:"Load from previous decompilation", data:BROWSE_DATABASE}	
+			]);
+		
+			protected function childByCombo(item:*):Container {
+				trace ("child by bombo");
+				switch (item.data) {
+					case BROWSE_REMOTE_SITE:
+						return web;
+					case BROWSE_FILESYSTEM:
+						return filesystem;
+					case BROWSE_DATABASE:
+						return database;
+					default:
+						return null;
+				}
+			}
+		
+			protected function initializeApp():void {
+				model = DecompilerModelLocator.getInstance();
+				controller = DecompilerController.getInstance();	
+				var evt:CairngormEvent = new CairngormEvent(DecompilerController.INITIALIZE_DATABASE);
+				evt.dispatch();
+			}
+
+			private function viewCurrentSWF():void {
+				var evt:CairngormEvent = new CairngormEvent(DecompilerController.SET_STATE);
+				evt.data = DecompilerModelLocator.VIEWER_TOOL;
+				evt.dispatch();
+			}
+
+			
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%" horizontalAlign="center">	
+		<mx:Label text="Select method of finding swf" />
+		<mx:ComboBox id="loadingMethods" dataProvider="{methods}" />
+	</mx:HBox>
+	<mx:ViewStack id="selectionPane" width="100%" height="100%" selectedChild="{childByCombo(loadingMethods.selectedItem)}">
+		<view:WebBrowser id="web"/>
+		<view:FileBrowser id="filesystem" />
+		<mx:VBox width="100%" height="100%" id="database" >	
+		</mx:VBox>		
+		
+	</mx:ViewStack>
+	<mx:Button width="100%" label="Back to Parsed File" enabled="{model.swfProps != null}" click="viewCurrentSWF()" />
+</mx:VBox>

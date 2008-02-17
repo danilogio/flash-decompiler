@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox  xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:view="com.ludicast.decompiler.view.*">
+<mx:TabNavigator width="100%" height="100%">
+	<mx:Script>
+		<![CDATA[
+			import com.ludicast.decompiler.controller.DecompilerController;
+			import com.adobe.cairngorm.control.CairngormEvent;
+			import com.ludicast.decompiler.model.DecompilerModelLocator;
+		
+			[Bindable]
+			private var model:DecompilerModelLocator = DecompilerModelLocator.getInstance();
+/*
+			public function getStateLabel(state:String):String {
+				switch (state) {
+					case DecompilerModelLocator.LOAD_PROGRESS_ERROR:
+						return "Error loading or parsing SWF";
+					case DecompilerModelLocator.LOAD_PROGRESS_PARSING:
+						trace ("returned parsing state!");
+						return "Parsing SWF";
+					case DecompilerModelLocator.LOAD_PROGRESS_LOADING:
+						return "Loading SWF";
+					case DecompilerModelLocator.LOAD_PROGRESS_WAITING:
+						return "Enter information of SWF to analyze";
+					case DecompilerModelLocator.LOAD_PROGRESS_PARSED:
+						return "Should not appear...";
+					default:
+						return "Unspecified State";
+				}
+			}
+
+*/
+			private function loadNewSWF():void {
+				var evt:CairngormEvent = new CairngormEvent(DecompilerController.SET_STATE);
+				evt.data = DecompilerModelLocator.LOADER_TOOL;
+				evt.dispatch();
+			}
+
+		]]>
+	</mx:Script>
+		<mx:VBox width="100%" height="100%" label="Header Section">
+			<mx:Form>
+				<mx:FormItem label="Compressed:">
+					<mx:Label text="{model.swfProps.compressed ? 'Yes' : 'No'}" />
+				</mx:FormItem>
+				<mx:FormItem label="Version:">
+					<mx:Label text="{model.swfProps.version}" />
+				</mx:FormItem>
+				<mx:FormItem label="Length:">
+					<mx:Label text="{model.swfProps.fileLength}" />
+				</mx:FormItem>
+				<mx:FormItem label="Width">
+					<mx:Label text="{model.swfProps.width}" />
+				</mx:FormItem>
+				<mx:FormItem label="Height:">
+					<mx:Label text="{model.swfProps.height}" />
+				</mx:FormItem>				
+				<mx:FormItem label="Frame Rate:">
+					<mx:Label text="{model.swfProps.frameRate}" />
+				</mx:FormItem>
+				<mx:FormItem label="Frame Count:">
+					<mx:Label text="{model.swfProps.frameCount}" />
+				</mx:FormItem>			
+			</mx:Form>		
+		</mx:VBox>
+		<view:TagDisplay width="100%" height="100%" label="Tags"/>
+		<view:AS3Classes width="100%" height="100%" label="AS3 Classes"/>
+</mx:TabNavigator>
+<mx:Button width="100%" label="Load New SWF" click="loadNewSWF()"/>
+</mx:VBox>

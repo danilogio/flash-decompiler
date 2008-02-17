@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+
+	<mx:Script>
+		<![CDATA[
+			import com.ludicast.decompiler.controller.DecompilerController;
+			import com.adobe.cairngorm.control.CairngormEvent;
+		
+			private function loadFile(event:Event):void {
+				if (! fileTree.selectedItem is File) return;
+				var file:File = File(fileTree.selectedItem);
+				if (file.isDirectory) return;
+				if (file.type != ".swf") return;
+			
+				var evt:CairngormEvent = new CairngormEvent(DecompilerController.LOAD_LOCAL_SWF);
+				evt.data = file;
+				evt.dispatch();	
+			}
+		
+		
+		]]>
+	</mx:Script>
+	<mx:FileSystemTree id="fileTree" width="100%" height="100%" doubleClick="loadFile(event)" doubleClickEnabled="true" />
+
+</mx:VBox>
