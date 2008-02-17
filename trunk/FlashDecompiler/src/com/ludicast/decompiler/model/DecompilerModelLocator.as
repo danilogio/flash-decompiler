@@ -15,13 +15,28 @@ package com.ludicast.decompiler.model
       public var tags:ArrayCollection;
       public var loadedAS3Classes:ArrayCollection;
       
-      public static const LOADING_STATE:String = "loadingState";
-      public static const PARSING_STATE:String = "parsingState";
-      public static const ERROR_STATE:String = "errorState";
-      public static const WAITING_STATE:String = "waitingState";
-      public static const PARSED_STATE:String = "parsedState";
-	  
-	  public var currentState:String = WAITING_STATE;
+   
+      public static const LOAD_PROGRESS_LOADING:String = "loadingState";
+      public static const LOAD_PROGRESS_PARSING:String = "parsingState";
+      public static const LOAD_PROGRESS_ERROR:String = "errorState";
+      public static const LOAD_PROGRESS_WAITING:String = "waitingState";
+      public static const LOAD_PROGRESS_PARSED:String = "parsedState";
+	  private var _loadProgress:String = LOAD_PROGRESS_WAITING;
+
+	  public function get loadProgress():String {
+	  	return _loadProgress;
+	  }
+
+	  public function set loadProgress(progress:String):void {
+	  	_loadProgress = progress;
+	  	if (progress == LOAD_PROGRESS_PARSED) {
+	  		currentTool = VIEWER_TOOL;
+	  	}
+	  }
+
+      public static const LOADER_TOOL:String = "loaderTool";
+      public static const VIEWER_TOOL:String = "viewerTool";	  
+	  public var currentTool:String = LOADER_TOOL;
 
       public static function getInstance() : DecompilerModelLocator 
       {

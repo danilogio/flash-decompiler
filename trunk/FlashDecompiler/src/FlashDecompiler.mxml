@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" width="850" height="700" layout="absolute" xmlns:view="com.ludicast.decompiler.view.*">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" width="850" height="700" layout="absolute" xmlns:view="com.ludicast.decompiler.view.*" xmlns:business="com.ludicast.decompiler.business.*">
+	<business:Services id="services"  />
 	<view:ViewBox />
 </mx:WindowedApplication>

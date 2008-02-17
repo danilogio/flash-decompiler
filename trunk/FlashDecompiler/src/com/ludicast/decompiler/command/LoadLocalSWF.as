@@ -19,24 +19,24 @@ package com.ludicast.decompiler.command
 		public function execute(event:CairngormEvent):void
 		{
 			model = DecompilerModelLocator.getInstance();
-			model.currentState = DecompilerModelLocator.LOADING_STATE;
+			model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_LOADING;
 			var file:File = event.data as File;
 			
 			if (file == null || !file.exists) {
 				trace ("doesn't exit");
-				model.currentState = DecompilerModelLocator.ERROR_STATE;
+				model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_ERROR;
 				return;
 			}
 			try {
 				var bytes:ByteArray = readSWFFile(file);
-				model.currentState = DecompilerModelLocator.PARSING_STATE;
+				model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_PARSING;
 				bytes.endian = Endian.LITTLE_ENDIAN;			
 				SWFParser.parseSWF(bytes);
-				model.currentState = DecompilerModelLocator.PARSED_STATE;
+				model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_PARSED ;
 			} catch (error:Error) {
 				trace (error);
 				trace (error.getStackTrace());
-				model.currentState = DecompilerModelLocator.ERROR_STATE;
+				model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_ERROR;
 				return;				
 			}
 

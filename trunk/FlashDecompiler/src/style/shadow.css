@@ -500,4 +500,6 @@ List, TileList, HorizontalList
 	borderThickness:1;
 }
 
-
+FileSystemTree {
+	color: #FFFFFF	
+}

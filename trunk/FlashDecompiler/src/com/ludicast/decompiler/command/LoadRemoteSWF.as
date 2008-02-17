@@ -20,7 +20,7 @@ package com.ludicast.decompiler.command
 		public function execute(event:CairngormEvent):void
 		{
 			model = DecompilerModelLocator.getInstance();
-			model.currentState = DecompilerModelLocator.LOADING_STATE;
+			model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_LOADING;
 			var url:String = event.data;	
 			var urlReq:URLRequest = new URLRequest(url);
 			loader = new URLLoader();
@@ -31,17 +31,17 @@ package com.ludicast.decompiler.command
 
 		public function loaded(event:Event):void {
 			trace ("loaded!");
-			model.currentState = DecompilerModelLocator.PARSING_STATE;		
+			model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_PARSING;		
 			try {
 				cleanAndParseSWF(event.currentTarget.data);
 				trace ("there is try good");
 			} catch (error:Error) {
 				trace ("error here");
-				model.currentState = DecompilerModelLocator.ERROR_STATE;
+				model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_ERROR;
 				return;			
 			}
 			trace ("parsed successfully");
-			model.currentState = DecompilerModelLocator.PARSED_STATE;	
+			model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_PARSED;
 		}
 
 		public function cleanAndParseSWF(data:*):void {
