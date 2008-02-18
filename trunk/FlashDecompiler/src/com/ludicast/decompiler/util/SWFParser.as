@@ -2,7 +2,7 @@ package com.ludicast.decompiler.util
 {
 	import com.ludicast.decompiler.error.SWFParseError;
 	import com.ludicast.decompiler.model.DecompilerModelLocator;
-	import com.ludicast.decompiler.vo.SWFPropsVO;
+	import com.ludicast.decompiler.vo.SWFVO;
 	
 	import flash.utils.ByteArray;
 	
@@ -14,8 +14,12 @@ package com.ludicast.decompiler.util
 
 		
 		static public function parseSWF(byteArray:ByteArray):void {
-						
-			var propsVO:SWFPropsVO = new SWFPropsVO();			
+			var bytesCopy:ByteArray = new ByteArray();
+			for (var i:uint = 0; i < byteArray.length; i++) {
+				bytesCopy[i] = byteArray[i];
+			}
+			
+			var propsVO:SWFVO = new SWFVO();			
 			if (!HeaderParser.hasSWFSignature(byteArray)) {
 				throw new SWFParseError("No swf signature");
 			}
@@ -45,9 +49,11 @@ package com.ludicast.decompiler.util
 			propsVO.frameRate = (fps_i+fps_f/256);
 			propsVO.frameCount = byteArray.readUnsignedShort();
 
-			DecompilerModelLocator.getInstance().swfProps = propsVO;
+			var model:DecompilerModelLocator = DecompilerModelLocator.getInstance();
+			model.swfProps = propsVO;
+			propsVO.currentFileBytes = bytesCopy;
 			var tags:ArrayCollection = TagParser.getTags(byteArray);
-			DecompilerModelLocator.getInstance().tags = tags;
+			model.tags = tags;
 
 		}
 

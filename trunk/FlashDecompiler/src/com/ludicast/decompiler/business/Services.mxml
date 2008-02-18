@@ -16,7 +16,7 @@
 		]]>
 	</mx:Script>
     <business:SQLService id = "rdbms" 
-    	     localDatabaseFilePath = "{File.applicationDirectory.nativePath}"  
-    	     localDatabaseFileName = "NewDB.db" />      
+    	     localApplicationDirectory = "{File.applicationDirectory}"  
+    	     localDatabaseFileName = "NewDB.db" />
 
 </services:AIRServiceLocator>

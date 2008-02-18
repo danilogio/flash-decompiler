@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+
+	<mx:Script>
+		<![CDATA[
+			import com.ludicast.decompiler.model.DecompilerModelLocator;
+			
+			[Bindable]
+			private var model:DecompilerModelLocator = DecompilerModelLocator.getInstance();
+		
+		]]>
+	</mx:Script>
+	<mx:DataGrid id="swfs" width="100%" height="100%" dataProvider="{model.savedSWFs}"/>
+</mx:VBox>
