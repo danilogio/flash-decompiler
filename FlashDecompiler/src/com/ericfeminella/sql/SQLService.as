@@ -25,12 +25,9 @@
 package com.ericfeminella.sql
 {
 	import com.ericfeminella.errors.SQLServiceConnectionException;
-	import com.ericfeminella.sql.ISQLResponder;
-	import com.ericfeminella.sql.SQLService;
+	
 	import flash.data.SQLConnection;
-	import flash.data.SQLResult;
 	import flash.data.SQLStatement;
-	import flash.data.SQLTransactionLockType;
 	import flash.events.SQLErrorEvent;
 	import flash.events.SQLEvent;
 	import flash.filesystem.File;
@@ -99,6 +96,11 @@ package com.ericfeminella.sql
 		/**
 		 * Sets the path to the local SQLite database 
 		 */	
+		public function set localApplicationDirectory(dir:File):void {
+			localDatabaseFilePath = dir.nativePath;
+		} 
+		 
+		 
 		public function set localDatabaseFilePath(path:String) : void
 		{
 			trace ("path!!!"  + path );

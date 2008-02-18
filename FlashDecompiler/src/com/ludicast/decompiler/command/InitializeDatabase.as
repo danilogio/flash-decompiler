@@ -5,14 +5,11 @@ package com.ludicast.decompiler.command
 	import com.ericfeminella.sql.ISQLResponder;
 	import com.ludicast.decompiler.business.CreateTableDelegate;
 	import com.ludicast.decompiler.business.SQLStatementConfiguration;
+	import com.ludicast.decompiler.controller.DecompilerController;
 	
 	import flash.data.SQLConnection;
 	import flash.data.SQLResult;
 	import flash.errors.SQLError;
-	import flash.events.Event;
-	import flash.events.SQLErrorEvent;
-	import flash.events.SQLEvent;
-	import flash.filesystem.File;
 
 	public class InitializeDatabase implements ICommand, ISQLResponder
 	{
@@ -41,12 +38,16 @@ package com.ludicast.decompiler.command
 		public function result(evt:SQLResult) : void 
 		{
 			trace ("result" + evt.data);
+			var event:CairngormEvent = new CairngormEvent(DecompilerController.SELECT_ALL_SWFS);
+			event.dispatch();
 			//UserAccountsModelLocator.getInstance().resultMessage = "Operation complete";
 		}
 		
 		public function fault(error:SQLError) : void 
 		{
 			trace ("fault" + error);
+			var event:CairngormEvent = new CairngormEvent(DecompilerController.SELECT_ALL_SWFS);
+			event.dispatch();
 			//UserAccountsModelLocator.getInstance().resultMessage = error.message;
 		}
 

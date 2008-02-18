@@ -1,7 +1,9 @@
 package com.ludicast.decompiler.model
 {
 	import com.adobe.cairngorm.model.ModelLocator;
-	import com.ludicast.decompiler.vo.SWFPropsVO;
+	import com.ludicast.decompiler.vo.SWFVO;
+	
+	import flash.utils.ByteArray;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -10,11 +12,13 @@ package com.ludicast.decompiler.model
 		
 	
 	  private static var modelLocator : DecompilerModelLocator;      
-      public var swfProps:SWFPropsVO;
+      public var swfProps:SWFVO;
+
       
       public var tags:ArrayCollection;
       public var loadedAS3Classes:ArrayCollection;
-      
+   
+      public var savedSWFs:ArrayCollection;
    
       public static const LOAD_PROGRESS_LOADING:String = "loadingState";
       public static const LOAD_PROGRESS_PARSING:String = "parsingState";
@@ -62,7 +66,5 @@ package com.ludicast.decompiler.model
 			 this.initialize();
          }
       }
-		
-		
 	}
 }

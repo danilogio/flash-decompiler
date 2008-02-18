@@ -33,6 +33,9 @@ package com.ludicast.decompiler.command
 				bytes.endian = Endian.LITTLE_ENDIAN;			
 				SWFParser.parseSWF(bytes);
 				model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_PARSED ;
+				model.swfProps.remote = false;
+				model.swfProps.location = file.nativePath;
+				model.swfProps.name = file.name;
 			} catch (error:Error) {
 				trace (error);
 				trace (error.getStackTrace());

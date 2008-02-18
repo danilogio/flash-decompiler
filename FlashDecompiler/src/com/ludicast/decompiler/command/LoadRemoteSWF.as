@@ -15,13 +15,14 @@ package com.ludicast.decompiler.command
 	public class LoadRemoteSWF implements ICommand
 	{
 		private var loader:URLLoader;
+		private var url:String;
 		private var model:DecompilerModelLocator;
 		
 		public function execute(event:CairngormEvent):void
 		{
 			model = DecompilerModelLocator.getInstance();
 			model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_LOADING;
-			var url:String = event.data;	
+			url = event.data;	
 			var urlReq:URLRequest = new URLRequest(url);
 			loader = new URLLoader();
 			loader.dataFormat = URLLoaderDataFormat.BINARY;
@@ -42,6 +43,15 @@ package com.ludicast.decompiler.command
 			}
 			trace ("parsed successfully");
 			model.loadProgress = DecompilerModelLocator.LOAD_PROGRESS_PARSED;
+			model.swfProps.remote = true;
+			model.swfProps.location = url;
+			model.swfProps.name = getSWFName();
+			trace ("LOADED THE NAME :  " + model.swfProps.name);
+		}		
+
+		public function getSWFName():String {
+			var lastSlash:uint = url.lastIndexOf('/');
+			return url.substr(lastSlash + 1);
 		}
 
 		public function cleanAndParseSWF(data:*):void {
