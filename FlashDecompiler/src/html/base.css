@@ -1,0 +1,56 @@
+* {
+margin:0;
+padding:0;
+}
+
+/* General Style Info */
+body {
+/*    background-color: 003d4c; */
+	color: #000000;
+	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
+	/* font-family:courier; */
+	font-size:100%;
+	margin: 0;
+}
+a {
+	background-color: inherit;
+	color: #003d4c;
+	text-decoration: underline;
+	font-weight: bold;
+}
+a:hover {
+	background-color: inherit;
+	color: #003d4c;
+	text-decoration: underline;
+}
+a img {
+	border:none;
+}
+h1, h2, h3, h4 {
+	background-color: inherit;
+	font-weight: bold;
+    font-size: 135%;       	       
+}
+h1 {
+	/* color: #003d4c; */
+	margin: 0.1em 0;
+}
+h2 {
+	color: #e32;
+	/* font-family:'Gill Sans','lucida grande',helvetica, arial, sans-serif; */
+	margin: 0.3em 0;
+	padding-top: 0.8em;
+}
+h3 {
+	color: #993;
+	/* font-family:'Gill Sans','lucida grande',helvetica, arial, sans-serif; */
+	padding-top: 1.5em;
+}
+h4 {
+	color: #993;
+	font-weight: normal;
+	padding-top: 0.5em;
+}
+ul, li {
+	margin: 0 12px;
+}
