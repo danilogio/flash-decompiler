@@ -59,6 +59,7 @@ package com.ludicast.decompiler.util
 			
 			var tags:ArrayCollection = TagParser.getTags(byteArray);
 			model.tags = tags;
+			model.loadedAS3Classes = new ArrayCollection();
 		}
 
 		static public function shiftBytesToStart(bytes:ByteArray):ByteArray {

@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" show="loadClasses();">
 	<mx:Script>
 		<![CDATA[
+			import com.ludicast.decompiler.controller.DecompilerController;
+			import com.adobe.cairngorm.control.CairngormEvent;
+			import com.ludicast.decompiler.model.DecompilerModelLocator;
 			import com.ludicast.decompiler.vo.AS3Class;
+		
+			[Bindable]
+			private var model:DecompilerModelLocator = DecompilerModelLocator.getInstance();
+		
+		
+			private function loadClasses():void {
+				var evt:CairngormEvent = new CairngormEvent(DecompilerController.LOAD_AS3_CLASSES);
+				evt.dispatch();
+			}
+		
 		]]>
 	</mx:Script>
 	<mx:Form width="100%">
@@ -13,10 +26,10 @@
 		</mx:FormItem>
 		<mx:Button label="Filter Package or Class" />	
 	</mx:Form>
-	<mx:DataGrid width="100%" height="100%" >
+	<mx:DataGrid width="100%" height="100%" dataProvider="{model.loadedAS3Classes}" >
 		<mx:columns>
-			<mx:DataGridColumn headerText="package"/>
-			<mx:DataGridColumn headerText="class"/>
+			<mx:DataGridColumn headerText="package" dataField="packageName"/>
+			<mx:DataGridColumn headerText="class" dataField="className"/>
 		</mx:columns>
 	</mx:DataGrid>
 </mx:VBox>
