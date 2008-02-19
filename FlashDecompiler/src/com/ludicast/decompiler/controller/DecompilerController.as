@@ -25,6 +25,7 @@ package com.ludicast.decompiler.controller
 			addCommand( LOAD_REMOTE_SWF,  LoadRemoteSWFCommand );
 			addCommand( LOAD_LOCAL_SWF,  LoadLocalSWFCommand );
 			addCommand( LOAD_DATABASE_SWF,  LoadDatabaseSWFCommand );
+			addCommand( LOAD_AS3_CLASSES,  LoadAS3ClassesCommand );
 			addCommand( INITIALIZE_DATABASE,  InitializeDatabaseCommand );
 			addCommand( SET_STATE,  SetStateCommand );
 			addCommand( SAVE_CURRENT_SWF,  SaveCurrentSWFCommand );
@@ -35,6 +36,7 @@ package com.ludicast.decompiler.controller
 		public static const LOAD_REMOTE_SWF:String = "loadRemoteSWF";				
 		public static const LOAD_LOCAL_SWF:String = "loadLocalSWF";		
 		public static const LOAD_DATABASE_SWF:String = "loadDatabaseSWF";	
+		public static const LOAD_AS3_CLASSES:String = "loadAS3Classes";		
 		public static const SAVE_CURRENT_SWF:String = "saveCurrentSWF";	
 		public static const SELECT_ALL_SWFS:String = "selectAllSWFs";	
 		public static const INITIALIZE_DATABASE:String = "initializeDatabase";
