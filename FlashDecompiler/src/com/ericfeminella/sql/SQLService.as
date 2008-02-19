@@ -222,12 +222,17 @@ package com.ericfeminella.sql
 		 * @param optional prefetch
 		 * 
 		 */
-		public function execute(statement:String, responder:ISQLResponder, dataType:Class = null, prefetch:int = -1.0) : void
+		public function execute(statement:String, responder:ISQLResponder, dataType:Class = null, prefetch:int = -1.0, params:* = null) : void
 		{
 			this.statement = new SQLStatement();
-			open();			
+			open();
 			this.statement.sqlConnection = databaseConnection;
 			this.statement.text = statement;
+			if (params != null) {
+				for (var i:uint = 0; i < params.length; i++) {
+					this.statement.parameters[i] = params[i];
+				}
+			}
 			
 			if (dataType != null)
 			{
@@ -240,6 +245,7 @@ package com.ericfeminella.sql
 			trace ("opened with responder " + responder);
 			this.statement.execute(prefetch, new Responder( responder.result, responder.fault) );
 		}
+		
 	}
 }
 

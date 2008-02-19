@@ -40,11 +40,14 @@ package com.ludicast.decompiler.command
 				vo.width,
 				vo.height,
 				vo.frameRate,
-				vo.frameCount,
-				//model.currentFileBytes.readUTFBytes(model.currentFileBytes.length)
-				vo.currentFileBytes
+				vo.frameCount
 			);
-			delegate.insert(statement);		
+			var params:Array = [vo.rawData];
+
+			/*for (var i:uint; i < params.length; i++) {
+				trace ("jknjnkjjI@@@@" + i + "lxslsls" + params[i]);
+			}*/
+			delegate.insert(statement,params);		
 
 			trace ("insertion text : " + AIRServiceLocator.getInstance().getSQLService(Services.RDBMS).getSQLStatement().text);
 		}
