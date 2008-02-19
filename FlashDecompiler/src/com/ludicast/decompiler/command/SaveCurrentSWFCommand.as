@@ -16,7 +16,7 @@ package com.ludicast.decompiler.command
 	import flash.data.SQLResult;
 	import flash.errors.SQLError;
 
-	public class SaveCurrentSWF implements ICommand, ISQLResponder
+	public class SaveCurrentSWFCommand implements ICommand, ISQLResponder
 	{
 		private var exampleDB:SQLConnection;
 		private var model:DecompilerModelLocator;

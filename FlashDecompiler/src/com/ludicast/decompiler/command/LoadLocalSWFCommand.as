@@ -11,7 +11,7 @@ package com.ludicast.decompiler.command
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 
-	public class LoadLocalSWF implements ICommand
+	public class LoadLocalSWFCommand implements ICommand
 	{
 
 		private var model:DecompilerModelLocator;

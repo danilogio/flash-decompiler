@@ -15,7 +15,7 @@ package com.ludicast.decompiler.command
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 
-	public class LoadDatabaseSWF implements ICommand, ISQLResponder
+	public class LoadDatabaseSWFCommand implements ICommand, ISQLResponder
 	{
 
 		private var model:DecompilerModelLocator;

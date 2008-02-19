@@ -10,7 +10,7 @@ package com.ludicast.decompiler.command
 	
 	import mx.collections.ArrayCollection;
 
-	public class LoadAS3Classes implements ICommand
+	public class LoadAS3ClassesCommand implements ICommand
 	{
 
 		public function execute(event:CairngormEvent):void
