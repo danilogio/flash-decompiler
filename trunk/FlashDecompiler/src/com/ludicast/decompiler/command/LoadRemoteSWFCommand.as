@@ -12,7 +12,7 @@ package com.ludicast.decompiler.command
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 
-	public class LoadRemoteSWF implements ICommand
+	public class LoadRemoteSWFCommand implements ICommand
 	{
 		private var loader:URLLoader;
 		private var url:String;

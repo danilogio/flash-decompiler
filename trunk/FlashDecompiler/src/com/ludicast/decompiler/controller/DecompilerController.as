@@ -22,12 +22,12 @@ package com.ludicast.decompiler.controller
 		
 		
 		public function initialiseCommands() : void {
-			addCommand( LOAD_REMOTE_SWF,  LoadRemoteSWF );
-			addCommand( LOAD_LOCAL_SWF,  LoadLocalSWF );
-			addCommand( LOAD_DATABASE_SWF,  LoadDatabaseSWF );
-			addCommand( INITIALIZE_DATABASE,  InitializeDatabase );
-			addCommand( SET_STATE,  SetState );
-			addCommand( SAVE_CURRENT_SWF,  SaveCurrentSWF );
+			addCommand( LOAD_REMOTE_SWF,  LoadRemoteSWFCommand );
+			addCommand( LOAD_LOCAL_SWF,  LoadLocalSWFCommand );
+			addCommand( LOAD_DATABASE_SWF,  LoadDatabaseSWFCommand );
+			addCommand( INITIALIZE_DATABASE,  InitializeDatabaseCommand );
+			addCommand( SET_STATE,  SetStateCommand );
+			addCommand( SAVE_CURRENT_SWF,  SaveCurrentSWFCommand );
 			addCommand( SELECT_ALL_SWFS, SelectAllSWFsCommand);
 		}	
 		

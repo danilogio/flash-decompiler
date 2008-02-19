@@ -11,7 +11,7 @@ package com.ludicast.decompiler.command
 	import flash.data.SQLResult;
 	import flash.errors.SQLError;
 
-	public class InitializeDatabase implements ICommand, ISQLResponder
+	public class InitializeDatabaseCommand implements ICommand, ISQLResponder
 	{
 		private static var initialized:Boolean = false;
 		private var exampleDB:SQLConnection;
