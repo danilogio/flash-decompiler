@@ -57,6 +57,7 @@
 			
 			]]>
 		</mx:Script>
+<!-- http://www.google.com/search?as_q=&amp;hl=en&amp;num=30&amp;btnG=Google+Search&amp;as_epq=&amp;as_oq=&amp;as_eq=&amp;lr=&amp;cr=&amp;as_ft=i&amp;as_filetype=swf&amp;as_qdr=all&amp;as_nlo=&amp;as_nhi=&amp;as_occt=any&amp;as_dt=i&amp;as_sitesearch=&amp;as_rights=&amp;safe=images' complete="pageComplete();" doubleClick="trace (event.target + ':' + event.current -->
 
 		<mx:HBox width="100%">
 	        <mx:Button label="&lt; Back" id="backButton" click="navigator.historyBack();" enabled="false"/>
@@ -65,10 +66,10 @@
 			<mx:Button label="Browse..." click="changeLocation()"  />
 		</mx:HBox>
 		<mx:VDividedBox width="100%" height="100%">
-			<mx:HTML id="navigator" width="100%" height="70%" location='http://www.google.com/search?as_q=&amp;hl=en&amp;num=30&amp;btnG=Google+Search&amp;as_epq=&amp;as_oq=&amp;as_eq=&amp;lr=&amp;cr=&amp;as_ft=i&amp;as_filetype=swf&amp;as_qdr=all&amp;as_nlo=&amp;as_nhi=&amp;as_occt=any&amp;as_dt=i&amp;as_sitesearch=&amp;as_rights=&amp;safe=images' complete="pageComplete();" doubleClick="trace (event.target + ':' + event.currentTarget)" />
+			<mx:HTML id="navigator" width="100%" height="70%" location='app:/html/launchPage.html' complete="pageComplete();" doubleClick="trace (event.target + ':' + event.currentTarget)" />
 			<mx:TextArea width="100%" height="30%" id="source" editable="false" />
 		</mx:VDividedBox>
 		<mx:HBox width="100%" horizontalAlign="center">
-			<mx:Label text="URL of Remote SWF"/><mx:TextInput id="swfLocation" width="200"/><mx:Button label="Parse" click="parseSWF();" />
+			<mx:Label text="URL of Remote SWF"/><mx:TextInput id="swfLocation" width="200" text="app:/FlashDecompiler.swf" /><mx:Button label="Parse" click="parseSWF();" />
 		</mx:HBox>
 </mx:VBox>
