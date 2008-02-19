@@ -16,10 +16,8 @@ package com.ludicast.decompiler.business
 		public static const CREATE_TAG_TABLE:String = rm.getString("queries", "CREATE_TAG_TABLE");		
 		public static const INSERT_SWF:String = rm.getString("queries", "INSERT_SWF");
 		public static const SELECT_ALL_SWFS:String = rm.getString("queries", "SELECT_ALL_SWFS");
+		public static const SELECT_SWF_BY_ID:String = rm.getString("queries", "SELECT_SWF_BY_ID");
 
-		public static const INSERT:String = rm.getString("queries", "INSERT");
-
-		public static const SELECT:String = rm.getString("queries", "SELECT");
 		public static const UPDATE:String = rm.getString("queries", "UPDATE");
 		public static const DELETE:String = rm.getString("queries", "DELETE");
 	}

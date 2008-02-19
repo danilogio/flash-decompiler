@@ -51,10 +51,14 @@ package com.ludicast.decompiler.util
 
 			var model:DecompilerModelLocator = DecompilerModelLocator.getInstance();
 			model.swfProps = propsVO;
-			propsVO.currentFileBytes = bytesCopy;
+			trace ("LENGTH:::"  + bytesCopy.length);
+			
+			propsVO.rawData = bytesCopy; // bytesCopy.readUTFBytes(bytesCopy.length);
+			
+			trace (propsVO.rawData.length);
+			
 			var tags:ArrayCollection = TagParser.getTags(byteArray);
 			model.tags = tags;
-
 		}
 
 		static public function shiftBytesToStart(bytes:ByteArray):ByteArray {

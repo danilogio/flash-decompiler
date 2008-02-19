@@ -3,9 +3,9 @@ package com.ludicast.decompiler.business
 {
 	import com.ericfeminella.sql.ISQLResponder;
 
-	public final class SelectAllSWFsDelegate extends AbstractDelegate
+	public final class SelectSWFDelegate extends AbstractDelegate
 	{
-		public function SelectAllSWFsDelegate(responder:ISQLResponder)
+		public function SelectSWFDelegate(responder:ISQLResponder)
 		{
 			super( responder );
 		}

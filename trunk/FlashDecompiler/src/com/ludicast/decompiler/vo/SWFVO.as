@@ -16,6 +16,6 @@ package com.ludicast.decompiler.vo
       	public var id:uint = 0;
       	public var name:String;
       	public var parsed:Boolean;
-        public var currentFileBytes:ByteArray;      	
+        public var rawData:ByteArray;    	
 	}
 }

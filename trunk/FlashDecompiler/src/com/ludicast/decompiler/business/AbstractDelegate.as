@@ -17,9 +17,9 @@ package com.ludicast.decompiler.business
 			this.sql = AIRServiceLocator.getInstance().getSQLService( Services.RDBMS );
 		}
 		
-		protected function execute(statement:String, dataType:Class = null, prefetch:int = - 1.0) : void
+		protected function execute(statement:String, dataType:Class = null, prefetch:int = - 1.0, params:* = null) : void
 		{
-			this.sql.execute(statement, responder, dataType, prefetch);
+			this.sql.execute(statement, responder, dataType, prefetch, params);
 		}
 	}
 }

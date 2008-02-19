@@ -6,7 +6,7 @@ package com.ludicast.decompiler.command
 	import com.ericfeminella.sql.ISQLResponder;
 	import com.ericfeminella.sql.SQLStatementHelper;
 	import com.ludicast.decompiler.business.SQLStatementConfiguration;
-	import com.ludicast.decompiler.business.SelectAllSWFsDelegate;
+	import com.ludicast.decompiler.business.SelectSWFDelegate;
 	import com.ludicast.decompiler.model.DecompilerModelLocator;
 	import com.ludicast.decompiler.vo.SWFVO;
 	
@@ -19,7 +19,7 @@ package com.ludicast.decompiler.command
 	{
 		public function execute(event:CairngormEvent):void
 		{	
-			var delegate:SelectAllSWFsDelegate = new SelectAllSWFsDelegate( this );
+			var delegate:SelectSWFDelegate = new SelectSWFDelegate( this );
 			delegate.select( SQLStatementHelper.create(SQLStatementConfiguration.SELECT_ALL_SWFS), SWFVO);
 			
 			//UserAccountsModelLocator.getInstance().resultMessage = AIRServiceLocator.getInstance().getSQLService(Services.RDBMS).getSQLStatement().text;
@@ -32,6 +32,11 @@ package com.ludicast.decompiler.command
 		//	model.users.source = null;
 			
 			var i:int = 0;
+			if (evt.data == null) {
+				DecompilerModelLocator.getInstance().savedSWFs = new ArrayCollection();
+				return;
+			}
+			
 			var n:int = evt.data.length;
 			
 			trace ("had result " + evt);

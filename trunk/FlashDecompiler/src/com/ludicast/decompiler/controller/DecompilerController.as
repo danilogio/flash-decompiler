@@ -24,6 +24,7 @@ package com.ludicast.decompiler.controller
 		public function initialiseCommands() : void {
 			addCommand( LOAD_REMOTE_SWF,  LoadRemoteSWF );
 			addCommand( LOAD_LOCAL_SWF,  LoadLocalSWF );
+			addCommand( LOAD_DATABASE_SWF,  LoadDatabaseSWF );
 			addCommand( INITIALIZE_DATABASE,  InitializeDatabase );
 			addCommand( SET_STATE,  SetState );
 			addCommand( SAVE_CURRENT_SWF,  SaveCurrentSWF );
@@ -33,6 +34,7 @@ package com.ludicast.decompiler.controller
 		public static const SET_STATE:String = "setState";		
 		public static const LOAD_REMOTE_SWF:String = "loadRemoteSWF";				
 		public static const LOAD_LOCAL_SWF:String = "loadLocalSWF";		
+		public static const LOAD_DATABASE_SWF:String = "loadDatabaseSWF";	
 		public static const SAVE_CURRENT_SWF:String = "saveCurrentSWF";	
 		public static const SELECT_ALL_SWFS:String = "selectAllSWFs";	
 		public static const INITIALIZE_DATABASE:String = "initializeDatabase";

@@ -9,9 +9,9 @@ package com.ludicast.decompiler.business
 			super( responder );
 		}
 		
-		public function insert(statement:String) : void
+		public function insert(statement:String,params:* = null) : void
 		{	
-			this.execute(statement);
+			this.execute(statement,null,-1.0,params);
 		}
 	}
 }
