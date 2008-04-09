@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" >
 
 	<mx:Script>
 		<![CDATA[
@@ -15,11 +15,24 @@
 				var evt:CairngormEvent = new CairngormEvent(DecompilerController.LOAD_LOCAL_SWF);
 				evt.data = file;
 				evt.dispatch();	
+				saveLastDirectory(file);
+			}
+
+			private function saveLastDirectory(file:File):void {
+				var so:SharedObject = SharedObject.getLocal("lastDir");;
+				so.data.dir = file.parent.nativePath;
+				so.flush();
+			}
+
+			private function openFileBrowser():void {
+				var so:SharedObject = SharedObject.getLocal("lastDir");		
+				if (so == null || so.data == null ||  so.data.dir == null) return;	
+				fileTree.openSubdirectory(so.data.dir);		
 			}
 		
 		
 		]]>
 	</mx:Script>
-	<mx:FileSystemTree id="fileTree" width="100%" height="100%" doubleClick="loadFile(event)" doubleClickEnabled="true" />
+	<mx:FileSystemTree creationComplete="openFileBrowser()" id="fileTree" width="100%" height="100%" doubleClick="loadFile(event)" doubleClickEnabled="true" />
 
 </mx:VBox>
