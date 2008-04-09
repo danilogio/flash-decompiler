@@ -103,7 +103,7 @@ package com.ludicast.decompiler.util.tag
 			classes = new ArrayCollection();	
 			for (i = 0; i < abc.classes.length; i++) {				
 				var clsTraits:Traits = Traits(abc.classes[i]);
-				var cls:AS3Class = new AS3Class(clsTraits.name, clsTraits.name, this);
+				var cls:AS3Class = new AS3Class(clsTraits.name, this, clsTraits);
 				classes.addItem(cls);
 
 

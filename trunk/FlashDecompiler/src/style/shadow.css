@@ -6,11 +6,19 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 */
-/*
-global {
-   fontFamily: Monaco;
+
+@font-face {
+    src: url(myriad.swf);
+    fontFamily: "Myriad Pro";
+    fontStyle: normal;
+    fontWeight: normal;
 }
-*/
+
+global {
+	fontFamily: "Myriad Pro";
+	fontSize: 14;
+}
+
 
 Application {
    backgroundColor: #333333;

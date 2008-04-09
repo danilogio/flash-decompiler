@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox  xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:view="com.ludicast.decompiler.view.*">
+<mx:VBox  xmlns:mx="http://www.adobe.com/2006/mxml" verticalGap="5" width="100%" height="100%" xmlns:view="com.ludicast.decompiler.view.*">
 <mx:Button width="100%" label="Save Current SWF" enabled="{model.swfProps.id == 0}" click="saveCurrentSWF();"/>
 <mx:TabNavigator width="100%" height="100%">
 	<mx:Script>

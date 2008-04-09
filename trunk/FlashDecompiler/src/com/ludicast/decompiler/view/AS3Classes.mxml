@@ -2,6 +2,11 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" show="loadClasses();">
 	<mx:Script>
 		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.controls.Button;
+			import mx.controls.dataGridClasses.DataGridHeader;
+			import mx.controls.dataGridClasses.DataGridItemRenderer;
+			import com.ludicast.decompiler.util.tamarin.Traits;
 			import com.ludicast.decompiler.controller.DecompilerController;
 			import com.adobe.cairngorm.control.CairngormEvent;
 			import com.ludicast.decompiler.model.DecompilerModelLocator;
@@ -21,8 +26,8 @@
 				model.loadedAS3Classes.filterFunction = function (item:Object):Boolean {
 					if (filter.text == "") return true;
 				
-					if (item != null && item.className != null && 
-							String(item.className).indexOf(filter.text) != -1) {
+					if (item != null && item.packageName != null && 
+							String(item.packageName).indexOf(filter.text) != -1) {
 						return true;
 					} else {
 						return false;
@@ -32,6 +37,20 @@
 				model.loadedAS3Classes.refresh(); 
 			}
 		
+			private function classInfo(event:MouseEvent):void {
+				if (! event.target is DataGridItemRenderer) return;
+				if (event.target.parent is DataGridHeader) return;
+				if (event.target is Button) return;
+						
+				var cls:AS3Class = classGrid.selectedItem as AS3Class;
+				if (cls == null) return;
+
+				var infoBox:ClassInfoBox = new ClassInfoBox();
+				infoBox.classData = cls;
+				PopUpManager.addPopUp(infoBox,this,true);
+				PopUpManager.centerPopUp(infoBox);
+			}
+
 		]]>
 	</mx:Script>
 	<mx:Form width="100%">
@@ -42,7 +61,8 @@
 		</mx:FormItem>
 		<mx:Button label="Filter Package or Class" click="filterPackages()" />	
 	</mx:Form>
-	<mx:DataGrid width="100%" height="100%" id="classGrid" dataProvider="{model.loadedAS3Classes}" >
+	<mx:Label text="Double click class for more information" />
+	<mx:DataGrid width="100%" height="100%" id="classGrid" dataProvider="{model.loadedAS3Classes}" click="classInfo(event)" >
 		<mx:columns>
 			<mx:DataGridColumn headerText="package" dataField="packageName"/>
 			<mx:DataGridColumn headerText="class" dataField="className"/>

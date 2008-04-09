@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:ViewStack selectedChild="{getPane(model.currentTool)}" xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%" height="100%" creationComplete="initializeApp()" xmlns:view="com.ludicast.decompiler.view.*">
+<mx:ViewStack selectedChild="{getPane(model.currentTool)}" verticalGap="5" xmlns:mx="http://www.adobe.com/2006/mxml" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%" height="100%" creationComplete="initializeApp()" xmlns:view="com.ludicast.decompiler.view.*">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Container;
