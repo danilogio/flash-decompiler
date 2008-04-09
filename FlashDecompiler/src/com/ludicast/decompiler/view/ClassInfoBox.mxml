@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	close="closeMe()" title="HELLO WORLD" showCloseButton="true" layout="vertical"
+	width="400" height="400" creationComplete="loadSettings()">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.ludicast.decompiler.util.tamarin.Traits;
+			import com.ludicast.decompiler.vo.AS3Class;
+			
+			[Bindable]
+			private var _classData:AS3Class;
+			
+			public function get classData():AS3Class {
+				return _classData;
+			}
+			
+			public function set classData(ts:AS3Class):void {
+				trace ("setting classInfo to " + ts);
+				this._classData = ts;
+				loadSettings();
+			}
+		
+		
+			private function printTraits(traits:Traits):String {
+				var ret:String = "";
+				ret += ("\n*******METHODS:\n");
+				var methods:Array = traits.methods;
+				if (methods != null) {
+					for (var i:Number = 0; i < methods.length; i++) {
+						if (methods[i] != null) 
+							ret += methods[i].toString();	
+					}
+				}
+				ret += ("\n*******MEMBERS:\n");
+				var members:Array = traits.members;
+				if (methods != null) {
+					for (i = 0; i < members.length; i++) {
+						ret += members[i].toString();	
+					}				
+				}
+				ret += ("\n*******INIT:\n");
+				ret += traits.init;
+				ret += ("\n*******SLOTS:\n");
+				ret += traits.slots;
+				ret += ("\n*******ITRAITS:\n");
+				ret += traits.itraits;
+				ret += ("\n*******BASE:\n");
+				ret += traits.base;
+				ret += ("\n*******INTERFACES:\n");
+				ret += traits.interfaces;
+				return ret;
+			}
+		
+			private function loadSettings():void {
+				trace ("LOADING SETTINGS!!!");
+				if (this._classData != null && classInfo != null) {
+					this.title = "Showing info for " + _classData.className;
+					classInfo.text = printTraits(_classData.traits);
+				}
+			}
+		
+			import mx.managers.PopUpManager;
+			private function closeMe():void {
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	<mx:TextArea id="classInfo" width="100%" height="100%"/>
+</mx:TitleWindow>

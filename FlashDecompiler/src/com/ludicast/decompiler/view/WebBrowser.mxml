@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" verticalGap="5" width="100%" height="100%">
 		<mx:Script>
 			<![CDATA[
 				import com.adobe.cairngorm.control.CairngormEvent;
@@ -37,11 +37,12 @@
 				
 
 				var ret:String = node.toString();
+			
 			//	for each (var s:* in node) {
 			//		ret += "(" + s + ":" + node[s] + ")";  					
 			//	}
-
 			//	trace (ret);
+				
 				for (var i:uint = 0; i < node.childNodes.length; ++i)
 				{
 					loadSWFs(node.childNodes[i]);
