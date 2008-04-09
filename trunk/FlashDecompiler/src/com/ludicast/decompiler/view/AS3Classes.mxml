@@ -16,17 +16,33 @@
 				evt.dispatch();
 			}
 		
+			private function filterPackages():void {
+
+				model.loadedAS3Classes.filterFunction = function (item:Object):Boolean {
+					if (filter.text == "") return true;
+				
+					if (item != null && item.className != null && 
+							String(item.className).indexOf(filter.text) != -1) {
+						return true;
+					} else {
+						return false;
+					}
+					
+				}
+				model.loadedAS3Classes.refresh(); 
+			}
+		
 		]]>
 	</mx:Script>
 	<mx:Form width="100%">
 		<mx:FormItem label="Package Name to Inspect" width="100%">
 			<mx:HBox width="100%">
-				<mx:TextInput text="com.*" width="100%" />
+				<mx:TextInput text="" width="100%" id="filter" enter="filterPackages()"/>
 			</mx:HBox>
 		</mx:FormItem>
-		<mx:Button label="Filter Package or Class" />	
+		<mx:Button label="Filter Package or Class" click="filterPackages()" />	
 	</mx:Form>
-	<mx:DataGrid width="100%" height="100%" dataProvider="{model.loadedAS3Classes}" >
+	<mx:DataGrid width="100%" height="100%" id="classGrid" dataProvider="{model.loadedAS3Classes}" >
 		<mx:columns>
 			<mx:DataGridColumn headerText="package" dataField="packageName"/>
 			<mx:DataGridColumn headerText="class" dataField="className"/>
